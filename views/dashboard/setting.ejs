@@ -84,7 +84,7 @@
               <span class="settings-subtext">Used on invoices and notifications</span>
             </div>
             <div class="settings-value-box">
-              <span class="field-display-text" id="display-full-name">Md Anas</span>
+              <span class="field-display-text" id="display-full-name"><%= user.name %></span>
               <input type="text" class="settings-input" id="input-full-name" value="Md Anas" style="display: none;" autocomplete="name" placeholder="Full Name" />
             </div>
           </div>
@@ -95,51 +95,8 @@
               <span class="settings-subtext">Primary address for login and alerts</span>
             </div>
             <div class="settings-value-box">
-              <span class="field-display-text" id="display-email">developer@example.com</span>
+              <span class="field-display-text" id="display-email"><%= user.email %></span>
               <input type="email" class="settings-input" id="input-email" value="developer@example.com" style="display: none;" autocomplete="email" placeholder="Email address" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="settings-card" id="card-security" aria-label="Security Settings">
-        <div class="settings-card-header">
-          <div class="settings-card-title-group">
-            <h2 class="settings-card-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <span>Security</span>
-            </h2>
-            <p class="settings-card-desc">Manage your password and authentication verification.</p>
-          </div>
-        </div>
-
-        <div class="settings-card-body">
-          <div class="settings-row">
-            <div class="settings-field-info">
-              <span class="settings-label">Password</span>
-              <span class="settings-subtext">Last updated 3 months ago</span>
-            </div>
-            <div class="settings-value-box">
-              <span class="field-display-mono">••••••••••••</span>
-              <button type="button" class="btn-outline-action" id="btn-change-password">
-                <span>Change Password</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="settings-row">
-            <div class="settings-field-info">
-              <span class="settings-label">Two-Factor Authentication</span>
-              <span class="settings-subtext">Add an extra layer of security to your ProxEve account</span>
-            </div>
-            <div class="settings-value-box">
-              <span class="status-tag-muted">Not enabled</span>
-              <button type="button" class="btn-outline-action" id="btn-setup-2fa">
-                <span>Set up</span>
-              </button>
             </div>
           </div>
         </div>

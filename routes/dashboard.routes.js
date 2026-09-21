@@ -1,14 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const isAuthenticated = require("../middlewares/auth.middleware");
+const attachUser = require("../middlewares/user.middleware");
+const User = require("../models/user");
 
 router.use(isAuthenticated);
+router.use(attachUser);
 
-router.get("/overview", (req, res) => {
+router.get("/overview", async (req, res) => {
   res.render("dashboard/overview");
 });
 
-router.get("/projects", (req, res) => {
+router.get("/projects", async (req, res) => {
   res.render("dashboard/project.ejs");
 });
 

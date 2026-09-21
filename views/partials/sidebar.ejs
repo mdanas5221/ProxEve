@@ -159,10 +159,10 @@
    <div class="sidebar-bottom">
      <div class="sidebar-user">
        <div class="user-info-group">
-         <div class="user-avatar" aria-hidden="true">MA</div>
+         <div class="user-avatar" aria-hidden="true"><%= user.name.slice(0, 2).toUpperCase() %></div>
          <div class="user-details">
-           <span class="user-name">Md Anas</span>
-           <span class="user-email">developer@example.com</span>
+           <span class="user-name"><%= user.name %></span>
+           <span class="user-email"><%= user.email %></span>
          </div>
        </div>
        <form action="/logout" method="POST">
