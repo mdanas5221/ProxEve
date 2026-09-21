@@ -1,0 +1,44 @@
+const connectDB = require("./config/db");
+const express = require("express");
+const app = express();
+const path = require("path");
+const authRoutes = require("./routes/auth.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
+const session = require("express-session");
+
+connectDB()
+  .then(() => {
+    console.log("Successfully connected to DB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+
+// EXPRESS SETTINGS
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// DEFAULT MIDDLEWARES
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+
+// ROUTES
+app.use("/", authRoutes);
+app.use("/dashboard", dashboardRoutes);
+
+app.get("/", (req, res) => {
+  res.render("index.ejs");
+});
+
+// LISTENING PORT
+app.listen(3000, () => {
+  console.log(`Server is running on port 3000`);
+});

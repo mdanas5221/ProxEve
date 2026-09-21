@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+<body class="dashboard-body">
+  <!-- Backdrop for Mobile Navigation -->
+  <div class="dash-mobile-backdrop" id="dash-mobile-backdrop" aria-hidden="true"></div>
+
+  <%- include('../partials/sidebar.ejs') %>
+
+  <div class="dash-main-container">
+    <!-- Top Header Bar -->
+    <header class="dash-header" id="dash-header">
+      <div class="dash-header-left">
+        <button type="button" class="dash-sidebar-toggle-btn" id="dash-sidebar-toggle-btn" aria-label="Toggle sidebar" title="Toggle sidebar (Ctrl+B)">
+          <svg class="icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m14 9-3 3 3 3"></path>
+          </svg>
+          <svg class="icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m11 9 3 3-3 3"></path>
+          </svg>
+        </button>
+        <div class="dash-header-title-group">
+          <h1 class="dash-header-heading">API Keys</h1>
+          <p class="dash-header-subtitle">Create and manage the keys your applications use to connect to ProxEve.</p>
+        </div>
+      </div>
+
+      <div class="dash-header-actions">
+        <button type="button" class="btn-primary-action" id="btn-open-create-key">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Create API Key</span>
+        </button>
+        <!-- Mobile Hamburger Toggle (Right-aligned) -->
+        <button class="dash-mobile-toggle" id="dash-mobile-toggle" aria-label="Toggle dashboard menu" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-line line-1"></span>
+            <span class="hamburger-line line-2"></span>
+            <span class="hamburger-line line-3"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="dash-content">
+      <!-- Security Notice & Product Concept Stack -->
+      <section class="banners-stack" aria-label="Security and Key Architecture Information">
+        <!-- Subtle Security Information Banner -->
+        <div class="security-banner" id="security-notice-banner">
+          <div class="security-icon-box" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="security-text-group">
+            <h2 class="security-title">Keep your API keys secure</h2>
+            <p class="security-description">
+              Never share your ProxEve API keys publicly or commit them to source control.
+            </p>
+          </div>
+        </div>
+
+        <!-- BYOK Architecture Notice -->
+        <div class="byok-info-banner" id="byok-info-banner">
+          <div class="byok-content">
+            <span class="byok-badge">BYOK Architecture</span>
+            <p class="byok-text">
+              Your AI provider keys remain yours. ProxEve uses your configured provider credentials according to your project's BYOK setup.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Toolbar with Demo Data Badge -->
+      <section class="keys-toolbar" aria-label="API Keys Status">
+        <div class="toolbar-left">
+          <span class="toolbar-title">Active Credentials (3)</span>
+          <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+        </div>
+      </section>
+
+      <!-- Mobile Section Large Action Button (Visible on mobile screens only) -->
+      <div class="mobile-section-action-bar" id="keys-mobile-action-bar">
+        <button type="button" class="btn-mobile-large-action" id="btn-mobile-create-key" data-action="create-key">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Create API Key</span>
+        </button>
+      </div>
+
+      <!-- ==================================================
+             API KEYS TABLE (MOCK KEYS LIST)
+             ================================================== -->
+      <section class="keys-table-card" id="keys-table-card" aria-label="API Key List">
+        <div class="table-responsive">
+          <table class="keys-table" id="keys-table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Project</th>
+                <th scope="col">Key</th>
+                <th scope="col">Created</th>
+                <th scope="col">Last Used</th>
+                <th scope="col">Status</th>
+                <th scope="col" style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="keys-tbody">
+              <!-- KEY 1: Production (MyQueryTool) -->
+              <tr id="key-row-1" data-status="active">
+                <td>
+                  <div class="key-name-group">
+                    <span class="key-name-text">Production</span>
+                    <span class="key-env-badge">Production Key</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="project-badge">
+                    <svg class="project-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+                    </svg>
+                    <span>MyQueryTool</span>
+                  </span>
+                </td>
+                <td>
+                  <div class="key-code-box" title="ProxEve Live API Key">
+                    <span>pk_live_••••••••••••••••••••</span>
+                  </div>
+                </td>
+                <td class="date-cell">Sep 10, 2026</td>
+                <td class="activity-cell">2 minutes ago</td>
+                <td>
+                  <span class="status-pill active">
+                    <span class="status-dot"></span>
+                    <span>Active</span>
+                  </span>
+                </td>
+                <td style="text-align: right;">
+                  <div class="actions-cell-group" style="justify-content: flex-end;">
+                    <button type="button" class="btn-action-icon btn-copy-key" data-key="pk_live_••••••••••••••••••••" title="Copy key">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                      </svg>
+                      <span>Copy</span>
+                    </button>
+                    <button type="button" class="btn-action-icon btn-action-danger btn-revoke-key" data-name="Production" title="Revoke key">
+                      <span>Revoke</span>
+                    </button>
+
+                    <!-- Three-Dot Menu -->
+                    <div class="menu-container">
+                      <button type="button" class="btn-three-dots" aria-label="Key actions" aria-haspopup="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="1.5"></circle>
+                          <circle cx="12" cy="5" r="1.5"></circle>
+                          <circle cx="12" cy="19" r="1.5"></circle>
+                        </svg>
+                      </button>
+                      <div class="menu-dropdown" role="menu">
+                        <button type="button" class="menu-item" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                          <span>View Details</span>
+                        </button>
+                        <button type="button" class="menu-item" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                          </svg>
+                          <span>Rename</span>
+                        </button>
+                        <button type="button" class="menu-item danger" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                          </svg>
+                          <span>Revoke Key</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- KEY 2: Development (AI Assistant) -->
+              <tr id="key-row-2" data-status="active">
+                <td>
+                  <div class="key-name-group">
+                    <span class="key-name-text">Development</span>
+                    <span class="key-env-badge">Dev Sandbox</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="project-badge">
+                    <svg class="project-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+                    </svg>
+                    <span>AI Assistant</span>
+                  </span>
+                </td>
+                <td>
+                  <div class="key-code-box" title="ProxEve Test API Key">
+                    <span>pk_test_••••••••••••••••••••</span>
+                  </div>
+                </td>
+                <td class="date-cell">Sep 8, 2026</td>
+                <td class="activity-cell">18 minutes ago</td>
+                <td>
+                  <span class="status-pill active">
+                    <span class="status-dot"></span>
+                    <span>Active</span>
+                  </span>
+                </td>
+                <td style="text-align: right;">
+                  <div class="actions-cell-group" style="justify-content: flex-end;">
+                    <button type="button" class="btn-action-icon btn-copy-key" data-key="pk_test_••••••••••••••••••••" title="Copy key">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                      </svg>
+                      <span>Copy</span>
+                    </button>
+                    <button type="button" class="btn-action-icon btn-action-danger btn-revoke-key" data-name="Development" title="Revoke key">
+                      <span>Revoke</span>
+                    </button>
+
+                    <!-- Three-Dot Menu -->
+                    <div class="menu-container">
+                      <button type="button" class="btn-three-dots" aria-label="Key actions" aria-haspopup="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="1.5"></circle>
+                          <circle cx="12" cy="5" r="1.5"></circle>
+                          <circle cx="12" cy="19" r="1.5"></circle>
+                        </svg>
+                      </button>
+                      <div class="menu-dropdown" role="menu">
+                        <button type="button" class="menu-item" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                          <span>View Details</span>
+                        </button>
+                        <button type="button" class="menu-item" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                          </svg>
+                          <span>Rename</span>
+                        </button>
+                        <button type="button" class="menu-item danger" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                          </svg>
+                          <span>Revoke Key</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- KEY 3: Testing (Content Generator - Revoked) -->
+              <tr id="key-row-3" data-status="revoked" style="background-color: #fafafa;">
+                <td>
+                  <div class="key-name-group">
+                    <span class="key-name-text" style="color: #64748b; text-decoration: line-through;">Testing</span>
+                    <span class="key-env-badge" style="color: #94a3b8;">Revoked</span>
+                  </div>
+                </td>
+                <td>
+                  <span class="project-badge" style="color: #64748b; border-color: #f1f5f9;">
+                    <svg class="project-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+                    </svg>
+                    <span>Content Generator</span>
+                  </span>
+                </td>
+                <td>
+                  <div class="key-code-box" style="background: #f1f5f9; color: #94a3b8; border-style: dashed;" title="Revoked API Key">
+                    <span>pk_test_••••••••••••••••••••</span>
+                  </div>
+                </td>
+                <td class="date-cell" style="color: #94a3b8;">Sep 2, 2026</td>
+                <td class="activity-cell" style="color: #94a3b8;">3 days ago</td>
+                <td>
+                  <span class="status-pill revoked">
+                    <span class="status-dot"></span>
+                    <span>Revoked</span>
+                  </span>
+                </td>
+                <td style="text-align: right;">
+                  <div class="actions-cell-group" style="justify-content: flex-end;">
+                    <!-- Disabled Copy Button for Revoked Key -->
+                    <button type="button" class="btn-action-icon" disabled aria-disabled="true" title="Copying is disabled for revoked keys">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                      </svg>
+                      <span>Copy</span>
+                    </button>
+
+                    <!-- Disabled Revoke Button -->
+                    <button type="button" class="btn-action-icon" disabled aria-disabled="true" style="opacity: 0.45; cursor: not-allowed;">
+                      <span>Revoked</span>
+                    </button>
+
+                    <!-- Three-Dot Menu -->
+                    <div class="menu-container">
+                      <button type="button" class="btn-three-dots" aria-label="Key actions" aria-haspopup="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="1.5"></circle>
+                          <circle cx="12" cy="5" r="1.5"></circle>
+                          <circle cx="12" cy="19" r="1.5"></circle>
+                        </svg>
+                      </button>
+                      <div class="menu-dropdown" role="menu">
+                        <button type="button" class="menu-item" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                          <span>View Audit Log</span>
+                        </button>
+                        <button type="button" class="menu-item danger" role="menuitem">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 6h18"></path>
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                          </svg>
+                          <span>Delete Record</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             EMPTY STATE (HTML & CSS STRUCTURE FOR FUTURE USE)
+             ================================================== -->
+      <section class="keys-empty-state" id="keys-empty-state" style="display: none;" aria-label="Empty API Keys State">
+        <div class="empty-state-icon-box" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7.5" cy="15.5" r="5.5"></circle>
+            <path d="m21 2-9.6 9.6"></path>
+            <path d="m15.5 7.5 3 3L22 7l-3-3"></path>
+          </svg>
+        </div>
+        <h2 class="empty-state-title">No API keys yet</h2>
+        <p class="empty-state-desc">
+          Create an API key to connect your application to ProxEve.
+        </p>
+        <button type="button" class="btn-empty-create" id="btn-empty-create">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Create API Key</span>
+        </button>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===================================
+         MODAL: CREATE API KEY (UI ONLY)
+       =================================== -->
+  <div class="modal-backdrop" id="modal-create-key" role="dialog" aria-modal="true" aria-labelledby="modal-key-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 class="modal-title" id="modal-key-title">Create API Key</h2>
+          <p class="modal-desc">Create a key for authenticating requests from your application.</p>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-modal" aria-label="Close dialog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="key-name-input">
+            Key Name <span style="color: #ef4444;">*</span>
+          </label>
+          <input type="text" id="key-name-input" class="form-input" placeholder="e.g. Production" required />
+          <span class="form-error-msg" id="key-name-error">Key Name is required</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="key-project-select">
+            Project <span style="color: #ef4444;">*</span>
+          </label>
+          <select id="key-project-select" class="form-select" required>
+            <option value="" disabled selected>Select a project</option>
+            <option value="MyQueryTool">MyQueryTool</option>
+            <option value="AI Assistant">AI Assistant</option>
+            <option value="Content Generator">Content Generator</option>
+          </select>
+          <span class="form-error-msg" id="key-project-error">Please select a project</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="key-env-select">
+            Environment <span style="color: #ef4444;">*</span>
+          </label>
+          <select id="key-env-select" class="form-select" required>
+            <option value="" disabled selected>Select an environment</option>
+            <option value="Production">Production</option>
+            <option value="Development">Development</option>
+          </select>
+          <span class="form-error-msg" id="key-env-error">Please select an environment</span>
+        </div>
+
+        <!-- Newly Generated API Key Section (Suddenly shown on submit) -->
+        <div class="form-group generated-key-group" id="generated-key-group" style="display: none;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <label class="form-label" for="generated-key-input" style="color: #059669; font-weight: 700; display: flex; align-items: center; gap: 0.35rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 2l-2 2m-1.5 1.5L16 7m-1.5 1.5L13 10m-1.5 1.5L10 13m-1.5 1.5L7 16m-1.5 1.5L4 19m-2 2l2-2m0 0l3-3m-3 3l3 3m13-17l-3-3m3 3l-3 3"></path>
+                <circle cx="7.5" cy="16.5" r="3.5"></circle>
+              </svg>
+              <span>Your API Key</span>
+            </label>
+            <span style="font-size: 0.72rem; font-weight: 600; color: #059669; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.15rem 0.45rem; border-radius: 4px;">Ready to copy</span>
+          </div>
+          <div class="generated-key-box">
+            <input type="text" id="generated-key-input" class="generated-key-input" readonly value="" />
+            <button type="button" class="btn-copy-generated" id="btn-copy-modal-key" title="Copy API key">
+              <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+              </svg>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <p style="margin: 0; font-size: 0.75rem; color: #059669; display: flex; align-items: center; gap: 0.35rem;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Copy this key now. It won't be shown again.
+          </p>
+        </div>
+
+        <!-- Security One-Time Display Callout Notice -->
+        <div class="modal-security-callout">
+          <svg class="callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <p class="callout-text">
+            <strong>Security Notice:</strong> Your API key will only be shown once. Store it securely.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-modal-cancel" id="btn-modal-cancel">Cancel</button>
+        <button type="button" class="btn-modal-submit" id="btn-submit-modal">Create API Key</button>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../partials/toast-msg.ejs') %>
+
+  <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

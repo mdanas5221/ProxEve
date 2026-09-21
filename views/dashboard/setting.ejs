@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+<body class="dashboard-body">
+
+  <div class="dash-mobile-backdrop" id="dash-mobile-backdrop" aria-hidden="true"></div>
+
+  <%- include('../partials/sidebar.ejs') %>
+
+  <div class="dash-main-container">
+
+    <header class="dash-header" id="dash-header">
+      <div class="dash-header-left">
+        <button type="button" class="dash-sidebar-toggle-btn" id="dash-sidebar-toggle-btn" aria-label="Toggle sidebar" title="Toggle sidebar (Ctrl+B)">
+          <svg class="icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m14 9-3 3 3 3"></path>
+          </svg>
+          <svg class="icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m11 9 3 3-3 3"></path>
+          </svg>
+        </button>
+        <div class="dash-header-title-group">
+          <h1 class="dash-header-heading">Settings</h1>
+          <p class="dash-header-subtitle">Manage your account, preferences, and project configuration.</p>
+        </div>
+      </div>
+
+      <div class="dash-header-actions">
+        <!-- Mobile Hamburger Toggle (Right-aligned) -->
+        <button class="dash-mobile-toggle" id="dash-mobile-toggle" aria-label="Toggle dashboard menu" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-line line-1"></span>
+            <span class="hamburger-line line-2"></span>
+            <span class="hamburger-line line-3"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <main class="dash-content">
+
+      <section class="settings-toolbar" aria-label="Configuration Settings">
+        <div class="toolbar-title-wrap">
+          <span class="toolbar-title">General Preferences</span>
+        </div>
+      </section>
+
+      <section class="settings-card" id="card-account" aria-label="Account Settings">
+        <div class="settings-card-header">
+          <div class="settings-card-title-group">
+            <h2 class="settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Account</span>
+            </h2>
+            <p class="settings-card-desc">Your basic profile information and identity on ProxEve.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button type="button" class="btn-outline-action" id="btn-cancel-edit-account" style="display: none;">
+              <span>Cancel</span>
+            </button>
+            <button type="button" class="btn-outline-action" id="btn-edit-account" aria-label="Edit account details">
+              <svg id="icon-edit-account" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span id="text-edit-account">Edit</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-card-body">
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <label class="settings-label" for="input-full-name">Full Name</label>
+              <span class="settings-subtext">Used on invoices and notifications</span>
+            </div>
+            <div class="settings-value-box">
+              <span class="field-display-text" id="display-full-name">Md Anas</span>
+              <input type="text" class="settings-input" id="input-full-name" value="Md Anas" style="display: none;" autocomplete="name" placeholder="Full Name" />
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <label class="settings-label" for="input-email">Email</label>
+              <span class="settings-subtext">Primary address for login and alerts</span>
+            </div>
+            <div class="settings-value-box">
+              <span class="field-display-text" id="display-email">developer@example.com</span>
+              <input type="email" class="settings-input" id="input-email" value="developer@example.com" style="display: none;" autocomplete="email" placeholder="Email address" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card" id="card-security" aria-label="Security Settings">
+        <div class="settings-card-header">
+          <div class="settings-card-title-group">
+            <h2 class="settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>Security</span>
+            </h2>
+            <p class="settings-card-desc">Manage your password and authentication verification.</p>
+          </div>
+        </div>
+
+        <div class="settings-card-body">
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Password</span>
+              <span class="settings-subtext">Last updated 3 months ago</span>
+            </div>
+            <div class="settings-value-box">
+              <span class="field-display-mono">••••••••••••</span>
+              <button type="button" class="btn-outline-action" id="btn-change-password">
+                <span>Change Password</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Two-Factor Authentication</span>
+              <span class="settings-subtext">Add an extra layer of security to your ProxEve account</span>
+            </div>
+            <div class="settings-value-box">
+              <span class="status-tag-muted">Not enabled</span>
+              <button type="button" class="btn-outline-action" id="btn-setup-2fa">
+                <span>Set up</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="settings-card" id="card-default-project" aria-label="Default Project Configuration">
+        <div class="settings-card-header">
+          <div class="settings-card-title-group">
+            <h2 class="settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+              </svg>
+              <span>Default Project</span>
+            </h2>
+            <p class="settings-card-desc">Choose the project shown by default when you open the dashboard.</p>
+          </div>
+        </div>
+
+        <div class="settings-card-body">
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Default Dashboard Project</span>
+              <span class="settings-subtext">Applies to initial metrics, logs, and cache views</span>
+            </div>
+            <div class="settings-value-box">
+              <select class="settings-select" id="select-default-project" aria-label="Select default dashboard project">
+                <option value="MyQueryTool" selected>MyQueryTool</option>
+                <option value="AI Assistant">AI Assistant</option>
+                <option value="Content Generator">Content Generator</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <section class="settings-card" id="card-preferences" aria-label="User Preferences">
+        <div class="settings-card-header">
+          <div class="settings-card-title-group">
+            <h2 class="settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+              <span>Preferences</span>
+            </h2>
+            <p class="settings-card-desc">Customize your dashboard display and notification channels.</p>
+          </div>
+        </div>
+
+        <div class="settings-card-body">
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Theme</span>
+              <span class="settings-subtext">Select your preferred visual interface mode</span>
+            </div>
+            <div class="settings-value-box">
+              <select class="settings-select" id="select-theme" aria-label="Select interface theme">
+                <option value="System" selected>System</option>
+                <option value="Light">Light</option>
+                <option value="Dark">Dark</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Email Notifications</span>
+              <span class="settings-subtext">Receive important account and usage notifications.</span>
+            </div>
+            <div class="settings-value-box">
+              <label class="toggle-switch-wrap" for="toggle-email-notifications" aria-label="Toggle email notifications">
+                <input type="checkbox" id="toggle-email-notifications" class="toggle-input" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Product Updates</span>
+              <span class="settings-subtext">Receive occasional updates about ProxEve.</span>
+            </div>
+            <div class="settings-value-box">
+              <label class="toggle-switch-wrap" for="toggle-product-updates" aria-label="Toggle product updates">
+                <input type="checkbox" id="toggle-product-updates" class="toggle-input" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- ==================================================
+             6. API CONFIGURATION CARD
+             ================================================== -->
+      <section class="settings-card" id="card-api-config" aria-label="API Configuration Settings">
+        <div class="settings-card-header">
+          <div class="settings-card-title-group">
+            <h2 class="settings-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                <path d="m21 2-9.6 9.6"></path>
+                <path d="m15.5 7.5 3 3L22 7l-3-3"></path>
+              </svg>
+              <span>API Configuration</span>
+            </h2>
+            <p class="settings-card-desc">Configure proxy defaults and connected provider targets.</p>
+          </div>
+        </div>
+
+        <div class="settings-card-body">
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Default API Environment</span>
+              <span class="settings-subtext">Target environment used for new application routing</span>
+            </div>
+            <div class="settings-value-box">
+              <select class="settings-select" id="select-default-env" aria-label="Default API Environment">
+                <option value="Production" selected>Production</option>
+                <option value="Development">Development</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label">Default Provider</span>
+              <span class="settings-subtext">Upstream AI model provider target</span>
+            </div>
+            <div class="settings-value-box">
+              <select class="settings-select" id="select-default-provider" aria-label="Default AI Provider">
+                <option value="OpenAI" selected>OpenAI</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Informational Security Note -->
+          <div class="info-callout-box">
+            <svg class="info-callout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <p class="info-callout-text">
+              Provider API credentials are managed separately and should never be exposed in the dashboard UI.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             7. DANGER ZONE
+             ================================================== -->
+      <section class="danger-zone-card" id="card-danger-zone" aria-label="Destructive Actions">
+        <div class="danger-zone-header">
+          <div class="settings-card-title-group">
+            <h2 class="danger-zone-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>Danger Zone</span>
+            </h2>
+            <p class="settings-card-desc">Irreversible actions regarding your account and project data.</p>
+          </div>
+        </div>
+
+        <div class="settings-card-body">
+          <div class="settings-row">
+            <div class="settings-field-info">
+              <span class="settings-label" style="color: #991b1b;">Delete Account</span>
+              <span class="settings-subtext">Permanently delete your ProxEve account and associated data.</span>
+            </div>
+            <div class="settings-value-box">
+              <button type="button" class="btn-danger-action" id="btn-delete-account">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+                <span>Delete Account</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             8. SAVE ACTION AREA
+             ================================================== -->
+      <section class="bottom-action-bar" id="bottom-action-bar" aria-label="Save Settings Area">
+        <div class="bottom-action-info">
+          <span>Review your modifications before applying changes.</span>
+        </div>
+        <div class="bottom-action-buttons">
+          <button type="button" class="btn-secondary-action" id="btn-cancel-settings">Cancel</button>
+          <button type="button" class="btn-primary-save" id="btn-save-settings">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span>Save Changes</span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <%- include('../partials/toast-msg.ejs') %>
+
+  <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

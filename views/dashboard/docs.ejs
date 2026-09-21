@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+<body class="dashboard-body">
+
+  <div class="dash-mobile-backdrop" id="dash-mobile-backdrop" aria-hidden="true"></div>
+
+  <%- include('../partials/sidebar.ejs') %>
+
+  <div class="dash-main-container">
+    <!-- Standard Dashboard Header -->
+    <header class="dash-header dash-header-docs" id="dash-header">
+      <div class="dash-header-main-row">
+        <div class="dash-header-left">
+          <button type="button" class="dash-sidebar-toggle-btn" id="dash-sidebar-toggle-btn" aria-label="Toggle sidebar" title="Toggle sidebar (Ctrl+B)">
+            <svg class="icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+              <path d="M9 3v18"></path>
+              <path d="m14 9-3 3 3 3"></path>
+            </svg>
+            <svg class="icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+              <path d="M9 3v18"></path>
+              <path d="m11 9 3 3-3 3"></path>
+            </svg>
+          </button>
+          <div class="dash-header-title-group">
+            <h1 class="dash-header-heading">Documentation</h1>
+            <p class="dash-header-subtitle">Everything you need to integrate ProxEve into your application.</p>
+          </div>
+        </div>
+
+        <div class="dash-header-actions">
+          <!-- Mobile Hamburger Toggle (Right-aligned) -->
+          <button class="dash-mobile-toggle" id="dash-mobile-toggle" aria-label="Toggle dashboard menu" aria-expanded="false">
+            <span class="hamburger-box">
+              <span class="hamburger-line line-1"></span>
+              <span class="hamburger-line line-2"></span>
+              <span class="hamburger-line line-3"></span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sticky Mobile Sub-Bar: "On This Page" Dropdown (Fixed at the Top on Mobile/Tablet) -->
+      <div class="docs-mobile-toc-bar" id="docs-mobile-toc-bar">
+        <button type="button" class="docs-toc-bar-btn" id="docs-toc-toggle" aria-expanded="false" aria-controls="docs-mobile-toc-menu">
+          <div class="docs-toc-bar-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <span>On this page</span>
+          </div>
+          <div class="docs-toc-bar-right">
+            <span class="docs-toc-current-pill" id="docs-toc-current-pill">Introduction</span>
+            <svg class="docs-toc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Mobile Dropdown Menu Container (Slides down right beneath the header) -->
+        <div class="docs-mobile-toc-menu" id="docs-mobile-toc-menu" role="menu">
+          <div class="docs-mobile-toc-inner">
+            <!-- GETTING STARTED -->
+            <div class="docs-nav-group">
+              <div class="docs-nav-category">GETTING STARTED</div>
+              <ul class="docs-nav-list">
+                <li><a href="#introduction" class="docs-nav-link active" data-section="introduction">Introduction</a></li>
+                <li><a href="#quickstart" class="docs-nav-link" data-section="quickstart">Quickstart</a></li>
+                <li><a href="#how-it-works" class="docs-nav-link" data-section="how-it-works">How ProxEve Works</a></li>
+              </ul>
+            </div>
+
+            <!-- INTEGRATION -->
+            <div class="docs-nav-group">
+              <div class="docs-nav-category">INTEGRATION</div>
+              <ul class="docs-nav-list">
+                <li><a href="#authentication" class="docs-nav-link" data-section="authentication">Authentication</a></li>
+                <li><a href="#api-reference" class="docs-nav-link" data-section="api-reference">API Reference</a></li>
+                <li><a href="#configuration" class="docs-nav-link" data-section="configuration">Configuration</a></li>
+                <li><a href="#providers" class="docs-nav-link" data-section="providers">Providers</a></li>
+              </ul>
+            </div>
+
+            <!-- CACHING -->
+            <div class="docs-nav-group">
+              <div class="docs-nav-category">CACHING</div>
+              <ul class="docs-nav-list">
+                <li><a href="#exact-caching" class="docs-nav-link" data-section="exact-caching">Exact Caching</a></li>
+                <li><a href="#semantic-caching" class="docs-nav-link" data-section="semantic-caching">Semantic Caching</a></li>
+                <li><a href="#cache-controls" class="docs-nav-link" data-section="cache-controls">Cache Controls</a></li>
+              </ul>
+            </div>
+
+            <!-- MONITORING -->
+            <div class="docs-nav-group">
+              <div class="docs-nav-category">MONITORING</div>
+              <ul class="docs-nav-list">
+                <li><a href="#usage-metrics" class="docs-nav-link" data-section="usage-metrics">Usage & Metrics</a></li>
+                <li><a href="#request-logs" class="docs-nav-link" data-section="request-logs">Request Logs</a></li>
+                <li><a href="#errors" class="docs-nav-link" data-section="errors">Errors</a></li>
+              </ul>
+            </div>
+
+            <!-- ACCOUNT -->
+            <div class="docs-nav-group">
+              <div class="docs-nav-category">ACCOUNT</div>
+              <ul class="docs-nav-list">
+                <li><a href="#projects" class="docs-nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#api-keys" class="docs-nav-link" data-section="api-keys">API Keys</a></li>
+                <li><a href="#settings" class="docs-nav-link" data-section="settings">Settings</a></li>
+              </ul>
+            </div>
+
+            <!-- OTHER -->
+            <div class="docs-nav-group">
+              <div class="docs-nav-category">OTHER</div>
+              <ul class="docs-nav-list">
+                <li><a href="#faq" class="docs-nav-link" data-section="faq">FAQ</a></li>
+                <li><a href="#troubleshooting" class="docs-nav-link" data-section="troubleshooting">Troubleshooting</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dash-content">
+      <div class="docs-two-col-layout">
+
+        
+        <aside class="docs-section-nav" id="docs-section-nav" aria-label="Documentation Sections">
+          <div class="docs-nav-inner">
+            <div class="docs-nav-title-desktop">
+              <div class="docs-nav-title-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+                <span>On This Page</span>
+              </div>
+            </div>
+
+            <div class="docs-nav-groups-wrapper" id="docs-nav-groups-wrapper">
+              <!-- GETTING STARTED -->
+              <div class="docs-nav-group">
+                <div class="docs-nav-category">GETTING STARTED</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#introduction" class="docs-nav-link active" data-section="introduction">Introduction</a></li>
+                  <li><a href="#quickstart" class="docs-nav-link" data-section="quickstart">Quickstart</a></li>
+                  <li><a href="#how-it-works" class="docs-nav-link" data-section="how-it-works">How ProxEve Works</a></li>
+                </ul>
+              </div>
+
+              <!-- INTEGRATION -->
+              <div class="docs-nav-group">
+                <div class="docs-nav-category">INTEGRATION</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#authentication" class="docs-nav-link" data-section="authentication">Authentication</a></li>
+                  <li><a href="#api-reference" class="docs-nav-link" data-section="api-reference">API Reference</a></li>
+                  <li><a href="#configuration" class="docs-nav-link" data-section="configuration">Configuration</a></li>
+                  <li><a href="#providers" class="docs-nav-link" data-section="providers">Providers</a></li>
+                </ul>
+              </div>
+
+              <!-- CACHING -->
+              <div class="docs-nav-group">
+                <div class="docs-nav-category">CACHING</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#exact-caching" class="docs-nav-link" data-section="exact-caching">Exact Caching</a></li>
+                  <li><a href="#semantic-caching" class="docs-nav-link" data-section="semantic-caching">Semantic Caching</a></li>
+                  <li><a href="#cache-controls" class="docs-nav-link" data-section="cache-controls">Cache Controls</a></li>
+                </ul>
+              </div>
+
+              <!-- MONITORING -->
+              <div class="docs-nav-group">
+                <div class="docs-nav-category">MONITORING</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#usage-metrics" class="docs-nav-link" data-section="usage-metrics">Usage & Metrics</a></li>
+                  <li><a href="#request-logs" class="docs-nav-link" data-section="request-logs">Request Logs</a></li>
+                  <li><a href="#errors" class="docs-nav-link" data-section="errors">Errors</a></li>
+                </ul>
+              </div>
+
+              <!-- ACCOUNT -->
+              <div class="docs-nav-group">
+                <div class="docs-nav-category">ACCOUNT</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#projects" class="docs-nav-link" data-section="projects">Projects</a></li>
+                  <li><a href="#api-keys" class="docs-nav-link" data-section="api-keys">API Keys</a></li>
+                  <li><a href="#settings" class="docs-nav-link" data-section="settings">Settings</a></li>
+                </ul>
+              </div>
+
+              <!-- OTHER -->
+              <div class="docs-nav-group">
+                <div class="docs-nav-category">OTHER</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#faq" class="docs-nav-link" data-section="faq">FAQ</a></li>
+                  <li><a href="#troubleshooting" class="docs-nav-link" data-section="troubleshooting">Troubleshooting</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <div class="docs-article-flow">
+
+          <!-- 1. INTRODUCTION -->
+          <section id="introduction" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Getting Started</span>
+              <h2 class="docs-h1">Introduction</h2>
+            </div>
+
+            <p class="docs-lead">
+              ProxEve is an AI API caching proxy designed to reduce unnecessary AI provider requests by serving eligible repeated requests from cache.
+            </p>
+
+            <p class="docs-p">
+              Modern applications frequently submit identical or semantically duplicate prompts to large language models (LLMs), incurring per-token costs and unnecessary network latency. ProxEve sits between your application and upstream AI providers, inspecting incoming prompts, evaluating cache rules, and delivering sub-millisecond responses for cached requests.
+            </p>
+
+            <!-- Architecture Diagram Component (Styled HTML Boxes) -->
+            <div class="arch-diagram-wrapper">
+              <div class="arch-diagram-title">ProxEve High-Level Architecture</div>
+              <div class="arch-flow-row">
+
+                <div class="arch-node">
+                  <div class="arch-node-label">Client</div>
+                  <div class="arch-node-name">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="20" height="14" x="2" y="3" rx="2"></rect>
+                      <line x1="8" x2="16" y1="21" y2="21"></line>
+                      <line x1="12" x2="12" y1="17" y2="21"></line>
+                    </svg>
+                    <span>Your Application</span>
+                  </div>
+                </div>
+
+                <div class="arch-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                  <span class="arch-arrow-label">Prompt Req</span>
+                </div>
+
+                <div class="arch-node arch-node-primary">
+                  <div class="arch-node-label">Caching Layer</div>
+                  <div class="arch-node-name">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <span>ProxEve Proxy</span>
+                  </div>
+                </div>
+
+                <div class="arch-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                  <span class="arch-arrow-label">Lookup</span>
+                </div>
+
+                <div class="arch-node arch-node-cache">
+                  <div class="arch-node-label">Store</div>
+                  <div class="arch-node-name">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                    <span>Cache (Hit)</span>
+                  </div>
+                </div>
+
+                <div class="arch-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                  <span class="arch-arrow-label">Miss Fallback</span>
+                </div>
+
+                <div class="arch-node arch-node-provider">
+                  <div class="arch-node-label">Upstream</div>
+                  <div class="arch-node-name">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                    </svg>
+                    <span>AI Provider</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="arch-legend">
+                <div class="arch-legend-item">
+                  <span class="arch-legend-dot" style="background:#10b981;"></span>
+                  <span>Cache Hit: Returned in &lt; 15ms directly to app</span>
+                </div>
+                <div class="arch-legend-item">
+                  <span class="arch-legend-dot" style="background:#6366f1;"></span>
+                  <span>Cache Miss: Forwarded to OpenAI, Gemini, or Anthropic</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Demo Note Callout -->
+            <div class="docs-callout callout-demo">
+              <div class="docs-callout-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Demo Note</span>
+              </div>
+              This documentation represents the planned ProxEve architecture and will be updated as the API evolves. The metrics, endpoints, and schemas shown are simulated for prototype verification.
+            </div>
+          </section>
+
+          <!-- 2. QUICKSTART -->
+          <section id="quickstart" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Getting Started</span>
+              <h2 class="docs-h1">Quickstart</h2>
+              <p class="docs-lead">Connect your application to ProxEve in a few simple steps.</p>
+            </div>
+
+            <!-- Steps 1 to 5 -->
+            <div class="qs-steps-list">
+              <div class="qs-step-card">
+                <div class="qs-step-num">1</div>
+                <div class="qs-step-content">
+                  <h3 class="qs-step-title">Create a Project</h3>
+                  <p class="qs-step-desc">Navigate to <a href="/project" style="color:#2563eb;text-decoration:underline;">Projects</a> and click <strong>Create Project</strong> to isolate your caching rules and metrics.</p>
+                </div>
+              </div>
+
+              <div class="qs-step-card">
+                <div class="qs-step-num">2</div>
+                <div class="qs-step-content">
+                  <h3 class="qs-step-title">Create a ProxEve API Key</h3>
+                  <p class="qs-step-desc">Open the <a href="/api-key" style="color:#2563eb;text-decoration:underline;">API Keys tab</a> and generate an authentication key (e.g., <code class="code-inline">pk_live_...</code>).</p>
+                </div>
+              </div>
+
+              <div class="qs-step-card">
+                <div class="qs-step-num">3</div>
+                <div class="qs-step-content">
+                  <h3 class="qs-step-title">Configure your AI provider credentials</h3>
+                  <p class="qs-step-desc">In your project settings, link your existing OpenAI, Google Gemini, or Anthropic API key so ProxEve can proxy misses securely.</p>
+                </div>
+              </div>
+
+              <div class="qs-step-card">
+                <div class="qs-step-num">4</div>
+                <div class="qs-step-content">
+                  <h3 class="qs-step-title">Change your application's API base URL</h3>
+                  <p class="qs-step-desc">Switch your SDK base URL from <code class="code-inline">https://api.openai.com/v1</code> to the ProxEve gateway URL <code class="code-inline">https://api.proxeve.io/v1</code>.</p>
+                </div>
+              </div>
+
+              <div class="qs-step-card">
+                <div class="qs-step-num">5</div>
+                <div class="qs-step-content">
+                  <h3 class="qs-step-title">Send your first request</h3>
+                  <p class="qs-step-desc">Dispatch any standard chat completion or embedding request. The first call populates the cache; identical subsequent calls resolve in milliseconds.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- macOS-style Code Window with Dots -->
+            <div class="docs-code-container">
+              <div class="macos-code-window">
+                <div class="macos-window-header">
+                  <div class="macos-dots" aria-hidden="true">
+                    <span class="macos-dot macos-dot-red"></span>
+                    <span class="macos-dot macos-dot-yellow"></span>
+                    <span class="macos-dot macos-dot-green"></span>
+                  </div>
+                  <div class="macos-window-title">bash — curl demo request</div>
+                  <button type="button" class="macos-copy-btn" data-copy-id="snippet-quickstart-curl">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                    </svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <div class="macos-window-body">
+                  <pre id="snippet-quickstart-curl"><code><span class="code-token-cmd">curl</span> <span class="code-token-url">https://api.proxeve.io/v1/chat/completions</span> \
+  <span class="code-token-flag">-H</span> <span class="code-token-str">"Authorization: Bearer pk_live_demo_key"</span> \
+  <span class="code-token-flag">-H</span> <span class="code-token-str">"Content-Type: application/json"</span> \
+  <span class="code-token-flag">-d</span> <span class="code-token-str">'{
+    "model": "gpt-4o",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello"
+      }
+    ]
+  }'</span></code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. HOW PROXEVE WORKS -->
+          <section id="how-it-works" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Architecture</span>
+              <h2 class="docs-h1">How ProxEve Works</h2>
+            </div>
+
+            <p class="docs-p">
+              ProxEve functions as a transparent, high-throughput reverse proxy tailored specifically for AI completion and embedding APIs. When your client application sends an inference request:
+            </p>
+
+            <div class="docs-card-grid">
+              <div class="docs-card">
+                <div class="docs-card-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                </div>
+                <h3 class="docs-card-title">1. Request Ingestion</h3>
+                <p class="docs-card-desc">The request is authenticated via your ProxEve API key and mapped to your project configuration.</p>
+              </div>
+
+              <div class="docs-card">
+                <div class="docs-card-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </div>
+                <h3 class="docs-card-title">2. Cache Query</h3>
+                <p class="docs-card-desc">A canonical hash of the model parameters and prompt messages is evaluated in the cache cluster.</p>
+              </div>
+
+              <div class="docs-card">
+                <div class="docs-card-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <h3 class="docs-card-title">3. Hit Resolution</h3>
+                <p class="docs-card-desc">If a valid cached record exists, ProxEve returns it immediately with <code class="code-inline">X-ProxEve-Cache: HIT</code>.</p>
+              </div>
+
+              <div class="docs-card">
+                <div class="docs-card-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </div>
+                <h3 class="docs-card-title">4. Upstream Forwarding</h3>
+                <p class="docs-card-desc">On a cache miss, the request forwards directly to OpenAI, Anthropic, or Gemini. The response is cached and returned.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. AUTHENTICATION -->
+          <section id="authentication" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Integration</span>
+              <h2 class="docs-h1">Authentication</h2>
+            </div>
+
+            <p class="docs-p">
+              All requests to the ProxEve gateway require an authentication bearer token passed in the HTTP <code class="code-inline">Authorization</code> header:
+            </p>
+
+            <div class="macos-code-window">
+              <div class="macos-window-header">
+                <div class="macos-dots" aria-hidden="true">
+                  <span class="macos-dot macos-dot-red"></span>
+                  <span class="macos-dot macos-dot-yellow"></span>
+                  <span class="macos-dot macos-dot-green"></span>
+                </div>
+                <div class="macos-window-title">http header</div>
+                <button type="button" class="macos-copy-btn" data-copy-id="snippet-auth-header">
+                  <span>Copy</span>
+                </button>
+              </div>
+              <div class="macos-window-body">
+                <pre id="snippet-auth-header"><code><span class="code-token-cmd">Authorization</span>: Bearer pk_live_9b4e72a8c1f0d3e5</code></pre>
+              </div>
+            </div>
+
+            <div class="docs-callout callout-info">
+              <div class="docs-callout-title">Key Prefixes</div>
+              ProxEve keys use standard environment prefixes: <code class="code-inline">pk_live_</code> for production traffic and <code class="code-inline">pk_test_</code> for sandbox development.
+            </div>
+          </section>
+
+          <!-- 5. API REFERENCE -->
+          <section id="api-reference" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Integration</span>
+              <h2 class="docs-h1">API Reference</h2>
+            </div>
+
+            <p class="docs-p">
+              ProxEve is designed as a drop-in proxy compatible with the OpenAI API specification.
+            </p>
+
+            <div class="docs-table-wrapper">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Endpoint</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge-http-post">POST</span></td>
+                    <td><code class="code-inline">/v1/chat/completions</code></td>
+                    <td>Creates a model response for conversation messages with automatic caching.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-http-post">POST</span></td>
+                    <td><code class="code-inline">/v1/embeddings</code></td>
+                    <td>Generates text vector embeddings with exact string caching.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge-http-get">GET</span></td>
+                    <td><code class="code-inline">/v1/models</code></td>
+                    <td>Lists supported upstream models routed through your active provider connections.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 6. CONFIGURATION -->
+          <section id="configuration" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Integration</span>
+              <h2 class="docs-h1">Configuration</h2>
+            </div>
+
+            <p class="docs-p">
+              Each project can configure caching parameters through the dashboard or HTTP control headers:
+            </p>
+
+            <ul style="padding-left:1.5rem;color:var(--text-secondary);font-size:0.875rem;line-height:1.7;margin:0 0 1rem;">
+              <li><strong>TTL (Time-To-Live):</strong> Specify cache duration from 60 seconds to 30 days. Default is 24 hours.</li>
+              <li><strong>Model Scoping:</strong> Cache entries are strictly partitioned by model name (e.g. <code class="code-inline">gpt-4o</code> vs <code class="code-inline">claude-3-5-sonnet</code>).</li>
+              <li><strong>Temperature Handling:</strong> When temperature is 0.0, responses are cached aggressively. Queries with high temperature can be configured to bypass caching.</li>
+            </ul>
+          </section>
+
+          <!-- 7. PROVIDERS -->
+          <section id="providers" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Integration</span>
+              <h2 class="docs-h1">Providers</h2>
+            </div>
+
+            <p class="docs-p">
+              ProxEve acts as a multi-model gateway supporting major AI foundation providers:
+            </p>
+
+            <div class="docs-card-grid">
+              <div class="docs-card">
+                <h3 class="docs-card-title">OpenAI</h3>
+                <p class="docs-card-desc">Supported models include GPT-4o, GPT-4o-mini, and text-embedding-3-small.</p>
+              </div>
+              <div class="docs-card">
+                <h3 class="docs-card-title">Google Gemini</h3>
+                <p class="docs-card-desc">Supported models include Gemini 1.5 Flash, Gemini 1.5 Pro, and Gemini Flash Thinking.</p>
+              </div>
+              <div class="docs-card">
+                <h3 class="docs-card-title">Anthropic</h3>
+                <p class="docs-card-desc">Supported models include Claude 3.5 Sonnet and Claude 3 Haiku.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 8. EXACT CACHING -->
+          <section id="exact-caching" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Caching</span>
+              <h2 class="docs-h1">Exact Caching</h2>
+            </div>
+
+            <p class="docs-p">
+              Exact caching performs deterministic normalization and cryptographic hashing of the request body. When an incoming request matches a previous prompt payload exactly, ProxEve serves the cached result with zero upstream latency.
+            </p>
+
+            <div class="docs-callout callout-info">
+              <div class="docs-callout-title">Response Headers</div>
+              Inspect response headers to verify cache status:
+              <br />
+              <code class="code-inline">X-ProxEve-Cache: HIT</code> or <code class="code-inline">X-ProxEve-Cache: MISS</code>
+            </div>
+          </section>
+
+          <!-- 9. SEMANTIC CACHING -->
+          <section id="semantic-caching" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Caching</span>
+              <h2 class="docs-h1">Semantic Caching</h2>
+            </div>
+
+            <p class="docs-p">
+              Semantic caching compares prompt embeddings to identify queries with identical intent even when phrasing differs (e.g., <em>"What is the capital of France?"</em> vs <em>"Tell me France's capital city"</em>).
+            </p>
+
+            <p class="docs-p">
+              You can configure a semantic similarity threshold (e.g. 0.95) to balance between aggressive cache hits and response variation.
+            </p>
+          </section>
+
+          <!-- 10. CACHE CONTROLS -->
+          <section id="cache-controls" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Caching</span>
+              <h2 class="docs-h1">Cache Controls</h2>
+            </div>
+
+            <p class="docs-p">
+              Fine-tune caching behavior per request using custom HTTP headers:
+            </p>
+
+            <div class="docs-table-wrapper">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Header</th>
+                    <th>Value</th>
+                    <th>Behavior</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="code-inline">X-ProxEve-Bypass-Cache</code></td>
+                    <td><code class="code-inline">true</code></td>
+                    <td>Skips cache lookup and does not store the response.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="code-inline">X-ProxEve-Force-Refresh</code></td>
+                    <td><code class="code-inline">true</code></td>
+                    <td>Executes upstream call and updates existing cache record.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="code-inline">X-ProxEve-TTL</code></td>
+                    <td><code class="code-inline">3600</code></td>
+                    <td>Sets a custom time-to-live in seconds for this request.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 11. USAGE & METRICS -->
+          <section id="usage-metrics" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Monitoring</span>
+              <h2 class="docs-h1">Usage & Metrics</h2>
+            </div>
+
+            <p class="docs-p">
+              Track your application performance via the <a href="/usage" style="color:#2563eb;text-decoration:underline;">Usage Dashboard</a>. ProxEve logs real-time throughput metrics:
+            </p>
+
+            <ul style="padding-left:1.5rem;color:var(--text-secondary);font-size:0.875rem;line-height:1.7;margin:0 0 1rem;">
+              <li><strong>Total Request Volume:</strong> Aggregated calls made through your gateway.</li>
+              <li><strong>Cache Hit Ratio:</strong> Percentage of requests served directly from cache.</li>
+              <li><strong>Latency Saved:</strong> Average roundtrip time saved per cached response.</li>
+              <li><strong>Estimated Cost Avoidance:</strong> Dollar savings based on avoided upstream token charges.</li>
+            </ul>
+          </section>
+
+          <!-- 12. REQUEST LOGS -->
+          <section id="request-logs" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Monitoring</span>
+              <h2 class="docs-h1">Request Logs</h2>
+            </div>
+
+            <p class="docs-p">
+              The dashboard displays an audit trail of recent requests, including HTTP status codes, cache disposition (HIT/MISS), execution latency, and token consumption for rapid debugging.
+            </p>
+          </section>
+
+          <!-- 13. ERRORS -->
+          <section id="errors" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Monitoring</span>
+              <h2 class="docs-h1">Errors</h2>
+            </div>
+
+            <p class="docs-p">
+              Standard HTTP error responses are returned when requests cannot be processed:
+            </p>
+
+            <div class="docs-table-wrapper">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Status</th>
+                    <th>Reason & Remediation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="code-inline">401</code></td>
+                    <td>Unauthorized</td>
+                    <td>Missing or invalid ProxEve API key in Authorization header.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="code-inline">429</code></td>
+                    <td>Rate Limit Exceeded</td>
+                    <td>Project throughput limit reached. Upgrade tier or throttle client.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="code-inline">502</code></td>
+                    <td>Bad Gateway</td>
+                    <td>Upstream AI provider encountered an error or network timeout.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 14. PROJECTS -->
+          <section id="projects" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Account</span>
+              <h2 class="docs-h1">Projects</h2>
+            </div>
+
+            <p class="docs-p">
+              Projects allow you to isolate caching data, API keys, and rate limits across distinct applications or deployment environments (e.g. Staging vs Production). Create and manage projects in the <a href="/project" style="color:#2563eb;text-decoration:underline;">Projects section</a>.
+            </p>
+          </section>
+
+          <!-- 15. API KEYS -->
+          <section id="api-keys" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Account</span>
+              <h2 class="docs-h1">API Keys</h2>
+            </div>
+
+            <p class="docs-p">
+              Manage your credentials safely. ProxEve supports key rotation without service interruption, project-level scoping, and instant revocation from the <a href="/api-key" style="color:#2563eb;text-decoration:underline;">API Keys manager</a>.
+            </p>
+          </section>
+
+          <!-- 16. SETTINGS -->
+          <section id="settings" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Account</span>
+              <h2 class="docs-h1">Settings</h2>
+            </div>
+
+            <p class="docs-p">
+              Configure global account properties, notification webhooks for low cache hit rates, security preferences, and team collaborator permissions in <a href="/setting" style="color:#2563eb;text-decoration:underline;">Settings</a>.
+            </p>
+          </section>
+
+          <!-- 17. FAQ -->
+          <section id="faq" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Support</span>
+              <h2 class="docs-h1">Frequently Asked Questions</h2>
+              <p class="docs-lead">Click on any question below to expand the answer with a smooth accordion animation.</p>
+            </div>
+
+            <!-- FAQ Item 1 (Closed by default) -->
+            <div class="docs-faq-item">
+              <button type="button" class="docs-faq-question" aria-expanded="false">
+                <span>Does ProxEve store my prompts permanently?</span>
+                <svg class="docs-faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="docs-faq-answer">
+                No. Cached records are ephemeral and automatically expire according to your project's configured TTL. Data is encrypted in transit and at rest.
+              </div>
+            </div>
+
+            <!-- FAQ Item 2 (Closed by default) -->
+            <div class="docs-faq-item">
+              <button type="button" class="docs-faq-question" aria-expanded="false">
+                <span>What latency overhead does ProxEve add?</span>
+                <svg class="docs-faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="docs-faq-answer">
+                ProxEve edge proxies add negligible latency (&lt; 8ms for cache misses). On cache hits, responses return in under 15ms, eliminating typical 800ms-3500ms upstream LLM execution delays.
+              </div>
+            </div>
+
+            <!-- FAQ Item 3 (Closed by default) -->
+            <div class="docs-faq-item">
+              <button type="button" class="docs-faq-question" aria-expanded="false">
+                <span>Can I use ProxEve with official SDKs (Python / Node.js)?</span>
+                <svg class="docs-faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="docs-faq-answer">
+                Yes. You only need to configure the <code class="code-inline">base_url</code> parameter in the official OpenAI Python or TypeScript SDK to point to ProxEve gateway URL.
+              </div>
+            </div>
+
+            <!-- FAQ Item 4 (Closed by default) -->
+            <div class="docs-faq-item">
+              <button type="button" class="docs-faq-question" aria-expanded="false">
+                <span>How does ProxEve handle non-deterministic parameters like temperature?</span>
+                <svg class="docs-faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="docs-faq-answer">
+                When temperature is 0, responses are completely deterministic and safely cached. When temperature is greater than 0, you can choose in your project configuration whether to cache or bypass.
+              </div>
+            </div>
+          </section>
+
+          <!-- 18. TROUBLESHOOTING -->
+          <section id="troubleshooting" class="docs-section">
+            <div class="docs-section-header">
+              <span class="docs-section-tag">Support</span>
+              <h2 class="docs-h1">Troubleshooting</h2>
+            </div>
+
+            <p class="docs-p">
+              If you encounter unexpected cache misses or connection issues:
+            </p>
+
+            <ul style="padding-left:1.5rem;color:var(--text-secondary);font-size:0.875rem;line-height:1.7;margin:0 0 1rem;">
+              <li><strong>Verify Temperature:</strong> Non-zero temperature values may introduce slight variability if strict exact caching is required.</li>
+              <li><strong>Check Header Case:</strong> Ensure your authorization header format is strictly <code class="code-inline">Authorization: Bearer &lt;key&gt;</code>.</li>
+              <li><strong>Inspect Response Headers:</strong> Examine <code class="code-inline">X-ProxEve-Cache</code> in the response to diagnose whether a miss occurred due to a custom bypass header.</li>
+            </ul>
+
+            <footer class="docs-footer">
+              <div>&copy; 2026 ProxEve Technologies Inc. Prototype Documentation.</div>
+              <div>Need assistance? Return to the <a href="/dashboard">Dashboard Overview</a>.</div>
+            </footer>
+          </section>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <%- include('../partials/toast-msg.ejs') %>
+
+  <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

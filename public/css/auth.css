@@ -1,0 +1,425 @@
+/* ==========================================================================
+   ProxEve Authentication Stylesheet (auth.css)
+   Consolidated styling for login.html, signup.html & auth pages
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Page Layout & Ambient Background
+   -------------------------------------------------------------------------- */
+.auth-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafbfc;
+  background-image:
+    radial-gradient(at 50% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 60%),
+    radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0);
+  background-size:
+    100% 100%,
+    24px 24px;
+  position: relative;
+  font-family: var(
+    --font-sans,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif
+  );
+  color: var(--text-primary, #0f172a);
+}
+
+/* Optional back navigation */
+.auth-back-nav {
+  margin-bottom: 1.75rem;
+}
+
+.auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary, #64748b);
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.auth-back-link:hover {
+  color: var(--text-primary, #0f172a);
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   2. Auth Card & Ambient Aura
+   -------------------------------------------------------------------------- */
+.auth-card-container {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  margin: 60px 0 20px 0;
+  padding: 2.5rem 1.25rem;
+}
+
+.auth-card-glow {
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    180deg,
+    rgba(37, 99, 235, 0.15) 0%,
+    rgba(15, 23, 42, 0.04) 100%
+  );
+  border-radius: 20px;
+  filter: blur(12px);
+  opacity: 0.6;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow:
+    0 20px 40px -15px rgba(15, 23, 42, 0.07),
+    0 1px 3px rgba(15, 23, 42, 0.03);
+  padding: 2.5rem 2.25rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   3. Brand Logo & Mark
+   -------------------------------------------------------------------------- */
+.auth-logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.auth-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  color: var(--text-primary, #0f172a);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+}
+
+.auth-logo-mark {
+  width: 36px;
+  height: 36px;
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+.auth-logo-mark svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Auth Header (Title & Subtitle)
+   -------------------------------------------------------------------------- */
+.auth-header {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.auth-title {
+  font-size: 1.625rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary, #0f172a);
+  margin-bottom: 0.375rem;
+  line-height: 1.25;
+}
+
+.auth-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   6. Form & Inputs
+   -------------------------------------------------------------------------- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.auth-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.auth-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.auth-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: -0.01em;
+}
+
+.auth-label-hint {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Modern Input with Icon Container */
+.auth-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 0.95rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: color var(--transition-fast, 0.15s ease);
+}
+
+.auth-input {
+  width: 100%;
+  font-family: var(
+    --font-sans,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif
+  );
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-primary, #0f172a);
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem 2.75rem 0.75rem 2.65rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.auth-input.no-action-icon {
+  padding-right: 1rem;
+}
+
+.auth-input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+  font-size: 0.875rem;
+}
+
+.auth-input:hover {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.auth-input:focus {
+  background-color: #ffffff;
+  border-color: var(--accent-blue, #2563eb);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.auth-input-container:focus-within .auth-input-icon {
+  color: var(--accent-blue, #2563eb);
+}
+
+/* --------------------------------------------------------------------------
+   7. Password Visibility Toggle
+   -------------------------------------------------------------------------- */
+.auth-password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  padding: 0.35rem;
+  color: #94a3b8;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.auth-password-toggle:hover {
+  color: #334155;
+  background-color: #f1f5f9;
+}
+
+
+/* Signup: Terms agreement row */
+.auth-terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin-top: 0.125rem;
+}
+
+.auth-terms-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #64748b);
+  line-height: 1.5;
+  user-select: none;
+}
+
+.auth-terms-link {
+  color: var(--accent-blue, #2563eb);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-terms-link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   9. Primary Action Button
+   -------------------------------------------------------------------------- */
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.8125rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: 10px;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1px solid #0f172a;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
+  box-sizing: border-box;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.auth-submit-btn:hover {
+  background-color: #1e293b;
+  border-color: #1e293b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+}
+
+.auth-submit-btn:hover .btn-arrow-icon {
+  transform: translateX(3px);
+}
+
+.auth-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
+}
+
+.btn-arrow-icon {
+  transition: transform var(--transition-fast, 0.15s ease);
+}
+
+/* --------------------------------------------------------------------------
+   10. Footer Prompt & Link
+   -------------------------------------------------------------------------- */
+.auth-footer-prompt {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary, #64748b);
+  text-align: center;
+}
+
+.auth-footer-link {
+  color: var(--accent-blue, #2563eb);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.25rem;
+  transition: color var(--transition-fast, 0.15s ease);
+}
+
+.auth-footer-link:hover {
+  color: var(--accent-blue-hover, #1d4ed8);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   11. Security Note
+   -------------------------------------------------------------------------- */
+.auth-security-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. Responsive Styling
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .auth-title {
+    font-size: 1.45rem;
+  }
+
+  .auth-benefits-strip {
+    gap: 0.35rem;
+    margin: 0.875rem 0 1.25rem 0;
+    padding-bottom: 1rem;
+  }
+
+  .auth-benefit-item {
+    font-size: 0.6875rem;
+    padding: 0.175rem 0.45rem;
+    gap: 0.25rem;
+  }
+
+  .auth-input {
+    padding-top: 0.6875rem;
+    padding-bottom: 0.6875rem;
+  }
+}

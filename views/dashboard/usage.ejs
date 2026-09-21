@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %>
+
+<body class="dashboard-body">
+  <div class="dash-mobile-backdrop" id="dash-mobile-backdrop" aria-hidden="true"></div>
+
+  <%- include('../partials/sidebar.ejs') %>
+
+  <div class="dash-main-container">
+    <!-- Top Header Bar -->
+    <header class="dash-header" id="dash-header">
+      <div class="dash-header-left">
+        <button type="button" class="dash-sidebar-toggle-btn" id="dash-sidebar-toggle-btn" aria-label="Toggle sidebar" title="Toggle sidebar (Ctrl+B)">
+          <svg class="icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m14 9-3 3 3 3"></path>
+          </svg>
+          <svg class="icon-expand" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 3v18"></path>
+            <path d="m11 9 3 3-3 3"></path>
+          </svg>
+        </button>
+        <div class="dash-header-title-group">
+          <h1 class="dash-header-heading">Usage</h1>
+          <p class="dash-header-subtitle">Monitor your requests, cache performance, and estimated savings.</p>
+        </div>
+      </div>
+
+      <div class="dash-header-actions">
+        <!-- Mobile Hamburger Toggle (Right-aligned) -->
+        <button class="dash-mobile-toggle" id="dash-mobile-toggle" aria-label="Toggle dashboard menu" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-line line-1"></span>
+            <span class="hamburger-line line-2"></span>
+            <span class="hamburger-line line-3"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="dash-content">
+      <!-- Toolbar & Filter Controls -->
+      <section class="usage-toolbar" aria-label="Usage Metrics Scope">
+        <div class="toolbar-title-wrap">
+          <span class="toolbar-title">Weekly Performance Overview</span>
+          <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+        </div>
+
+        <!-- Filter Dropdowns Relocated into Content Toolbar -->
+        <div class="usage-filters-group">
+          <!-- Project Selector Dropdown -->
+          <div class="selector-dropdown-wrap">
+            <button type="button" class="selector-btn" id="btn-usage-project-selector" aria-haspopup="true" aria-expanded="false" title="Filter by project">
+              <span class="selector-label">Project:</span>
+              <span class="selector-name" id="selected-usage-project-name">
+                <span class="project-dot" aria-hidden="true"></span>
+                <span>MyQueryTool</span>
+              </span>
+              <svg class="selector-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </button>
+            <div class="selector-dropdown-menu" id="menu-usage-project-selector" role="menu">
+              <button type="button" class="selector-menu-item selected" data-value="MyQueryTool" role="menuitem">
+                <span>MyQueryTool</span>
+                <span class="project-dot"></span>
+              </button>
+              <button type="button" class="selector-menu-item" data-value="AI Assistant" role="menuitem">
+                <span>AI Assistant</span>
+              </button>
+              <button type="button" class="selector-menu-item" data-value="Content Generator" role="menuitem">
+                <span>Content Generator</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Date Range Selector Dropdown -->
+          <div class="selector-dropdown-wrap">
+            <button type="button" class="selector-btn" id="btn-range-selector" aria-haspopup="true" aria-expanded="false" title="Filter by date range">
+              <span class="selector-label">Range:</span>
+              <span class="selector-name" id="selected-range-name">
+                <span>Last 7 days</span>
+              </span>
+              <svg class="selector-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </button>
+            <div class="selector-dropdown-menu" id="menu-range-selector" role="menu">
+              <button type="button" class="selector-menu-item" data-value="Last 24 hours" role="menuitem">
+                <span>Last 24 hours</span>
+              </button>
+              <button type="button" class="selector-menu-item selected" data-value="Last 7 days" role="menuitem">
+                <span>Last 7 days</span>
+              </button>
+              <button type="button" class="selector-menu-item" data-value="Last 30 days" role="menuitem">
+                <span>Last 30 days</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             2. OVERVIEW METRIC CARDS (4 CARDS)
+             ================================================== -->
+      <section class="metric-grid" aria-label="Summary Usage Metrics">
+        <!-- Card 1: Requests -->
+        <div class="metric-card" id="metric-card-requests">
+          <div class="metric-header">
+            <span class="metric-label">Requests</span>
+            <span class="metric-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+                <path d="m8 17 4-4 4 4"></path>
+                <path d="M12 13v9"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="metric-value">24,821</div>
+          <span class="metric-subtext">Total requests</span>
+        </div>
+
+        <!-- Card 2: Cache Hits -->
+        <div class="metric-card" id="metric-card-hits">
+          <div class="metric-header">
+            <span class="metric-label">Cache Hits</span>
+            <span class="metric-icon" style="color: #10b981;" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </span>
+          </div>
+          <div class="metric-value" style="color: #065f46;">18,403</div>
+          <span class="metric-subtext">Requests served from cache</span>
+        </div>
+
+        <!-- Card 3: Cache Misses -->
+        <div class="metric-card" id="metric-card-misses">
+          <div class="metric-header">
+            <span class="metric-label">Cache Misses</span>
+            <span class="metric-icon" style="color: #f59e0b;" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 8-4-4-4 4"></path>
+                <path d="M14 4v12a4 4 0 0 1-4 4H4"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="metric-value" style="color: #92400e;">6,418</div>
+          <span class="metric-subtext">Requests forwarded to the AI provider</span>
+        </div>
+
+        <!-- Card 4: Estimated Savings -->
+        <div class="metric-card" id="metric-card-savings">
+          <div class="metric-header">
+            <span class="metric-label">Estimated Savings</span>
+            <span class="metric-icon" style="color: #15803d;" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" x2="12" y1="2" y2="22"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </span>
+          </div>
+          <div class="metric-value" style="color: #15803d;">₹1,842</div>
+          <span class="metric-subtext">Estimated provider cost avoided</span>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             3. CACHE PERFORMANCE CARD
+             ================================================== -->
+      <section class="dash-panel" id="panel-cache-performance" aria-label="Cache Performance Summary">
+        <div class="dash-panel-header">
+          <div class="dash-panel-title-group">
+            <h2 class="dash-panel-title">Cache Performance</h2>
+            <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+          </div>
+          <span class="dash-panel-sub">7-Day Aggregation</span>
+        </div>
+
+        <div class="cache-perf-metrics">
+          <div class="perf-stat-block">
+            <div class="perf-stat-head">
+              <span class="perf-stat-label">Cache Hit Rate</span>
+              <span class="perf-stat-num" style="color: #065f46;">74.1%</span>
+            </div>
+            <span class="metric-subtext">18,403 cached responses delivered</span>
+          </div>
+
+          <div class="perf-stat-block">
+            <div class="perf-stat-head">
+              <span class="perf-stat-label">Cache Miss Rate</span>
+              <span class="perf-stat-num" style="color: #92400e;">25.9%</span>
+            </div>
+            <span class="metric-subtext">6,418 requests passed through to provider</span>
+          </div>
+        </div>
+
+        <!-- Clean Horizontal Progress Bar -->
+        <div class="perf-bar-wrap">
+          <div class="perf-progress-bar" role="progressbar" aria-label="Cache performance ratio" aria-valuenow="74.1" aria-valuemin="0" aria-valuemax="100">
+            <div class="perf-segment-hit" title="74.1% Hit Rate"></div>
+            <div class="perf-segment-miss" title="25.9% Miss Rate"></div>
+          </div>
+          <div class="perf-bar-legend">
+            <span class="perf-legend-item">
+              <span class="legend-dot-hit" aria-hidden="true"></span>
+              <span>Cache Hits: 74.1% (18,403)</span>
+            </span>
+            <span class="perf-legend-item">
+              <span class="legend-dot-miss" aria-hidden="true"></span>
+              <span>Cache Misses: 25.9% (6,418)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Explanatory note -->
+        <div class="perf-explanation-box">
+          <svg class="perf-explanation-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <p class="perf-explanation-text">
+            Cache hits are requests served from ProxEve without making a new AI provider request.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             4. REQUEST USAGE OVER TIME CHART
+             ================================================== -->
+      <section class="dash-panel" id="panel-requests-chart" aria-label="Requests Over Time Chart">
+        <div class="dash-panel-header">
+          <div class="dash-panel-title-group">
+            <h2 class="dash-panel-title">Requests Over Time</h2>
+            <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+          </div>
+          <div class="chart-legend-row">
+            <div class="chart-legends-group">
+              <span class="perf-legend-item">
+                <span class="legend-dot-hit" aria-hidden="true"></span>
+                <span>Cache Hits</span>
+              </span>
+              <span class="perf-legend-item">
+                <span class="legend-dot-miss" aria-hidden="true"></span>
+                <span>Cache Misses</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <!-- 7-Day Interactive Visual Bar Chart -->
+          <div class="chart-bars-wrap" id="chart-bars">
+            <!-- Monday (2,840) -->
+            <div class="chart-col" data-day="Mon" data-total="2,840" data-hits="2,089" data-misses="751">
+              <div class="chart-tooltip">
+                <strong>Mon: 2,840 reqs</strong><br />
+                Hits: 2,089 (73.6%)<br />
+                Misses: 751 (26.4%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 62%;">
+                  <div class="bar-segment-miss" style="height: 26.4%;"></div>
+                  <div class="bar-segment-hit" style="height: 73.6%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Mon</span>
+            </div>
+
+            <!-- Tuesday (3,120) -->
+            <div class="chart-col" data-day="Tue" data-total="3,120" data-hits="2,296" data-misses="824">
+              <div class="chart-tooltip">
+                <strong>Tue: 3,120 reqs</strong><br />
+                Hits: 2,296 (73.6%)<br />
+                Misses: 824 (26.4%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 68%;">
+                  <div class="bar-segment-miss" style="height: 26.4%;"></div>
+                  <div class="bar-segment-hit" style="height: 73.6%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Tue</span>
+            </div>
+
+            <!-- Wednesday (3,540) -->
+            <div class="chart-col" data-day="Wed" data-total="3,540" data-hits="2,612" data-misses="928">
+              <div class="chart-tooltip">
+                <strong>Wed: 3,540 reqs</strong><br />
+                Hits: 2,612 (73.8%)<br />
+                Misses: 928 (26.2%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 77%;">
+                  <div class="bar-segment-miss" style="height: 26.2%;"></div>
+                  <div class="bar-segment-hit" style="height: 73.8%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Wed</span>
+            </div>
+
+            <!-- Thursday (3,210) -->
+            <div class="chart-col" data-day="Thu" data-total="3,210" data-hits="2,362" data-misses="848">
+              <div class="chart-tooltip">
+                <strong>Thu: 3,210 reqs</strong><br />
+                Hits: 2,362 (73.6%)<br />
+                Misses: 848 (26.4%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 70%;">
+                  <div class="bar-segment-miss" style="height: 26.4%;"></div>
+                  <div class="bar-segment-hit" style="height: 73.6%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Thu</span>
+            </div>
+
+            <!-- Friday (4,080) -->
+            <div class="chart-col" data-day="Fri" data-total="4,080" data-hits="3,080" data-misses="1,000">
+              <div class="chart-tooltip">
+                <strong>Fri: 4,080 reqs</strong><br />
+                Hits: 3,080 (75.5%)<br />
+                Misses: 1,000 (24.5%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 89%;">
+                  <div class="bar-segment-miss" style="height: 24.5%;"></div>
+                  <div class="bar-segment-hit" style="height: 75.5%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Fri</span>
+            </div>
+
+            <!-- Saturday (3,450) -->
+            <div class="chart-col" data-day="Sat" data-total="3,450" data-hits="2,546" data-misses="904">
+              <div class="chart-tooltip">
+                <strong>Sat: 3,450 reqs</strong><br />
+                Hits: 2,546 (73.8%)<br />
+                Misses: 904 (26.2%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 75%;">
+                  <div class="bar-segment-miss" style="height: 26.2%;"></div>
+                  <div class="bar-segment-hit" style="height: 73.8%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Sat</span>
+            </div>
+
+            <!-- Sunday (4,581) -->
+            <div class="chart-col" data-day="Sun" data-total="4,581" data-hits="3,418" data-misses="1,163">
+              <div class="chart-tooltip">
+                <strong>Sun: 4,581 reqs</strong><br />
+                Hits: 3,418 (74.6%)<br />
+                Misses: 1,163 (25.4%)
+              </div>
+              <div class="chart-col-bars">
+                <div class="bar-stack" style="height: 100%;">
+                  <div class="bar-segment-miss" style="height: 25.4%;"></div>
+                  <div class="bar-segment-hit" style="height: 74.6%;"></div>
+                </div>
+              </div>
+              <span class="chart-col-label">Sun</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             5. CACHE ACTIVITY SECTION (SIDE-BY-SIDE CARDS)
+             ================================================== -->
+      <section aria-label="Cache Activity Breakdown">
+        <div class="dash-panel-header" style="border: none; padding-bottom: 0.75rem;">
+          <div class="dash-panel-title-group">
+            <h2 class="dash-panel-title">Cache Activity</h2>
+            <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+          </div>
+          <span class="dash-panel-sub">Volume and percentage breakdown</span>
+        </div>
+
+        <div class="activity-grid">
+          <!-- Card 1: Cache Hits -->
+          <div class="activity-card" id="activity-card-hits">
+            <div class="activity-card-header">
+              <span class="activity-card-title">
+                <span class="legend-dot-hit" aria-hidden="true"></span>
+                <span>Cache Hits</span>
+              </span>
+              <span class="activity-badge-hit">Optimal</span>
+            </div>
+            <div class="activity-numbers">
+              <span class="activity-count">18,403</span>
+              <span class="activity-percent" style="color: #065f46;">74.1%</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar-fill-hit"></div>
+            </div>
+            <p class="activity-desc">
+              Requests resolved directly from the local cache layer without incurring downstream provider roundtrips.
+            </p>
+          </div>
+
+          <!-- Card 2: Cache Misses -->
+          <div class="activity-card" id="activity-card-misses">
+            <div class="activity-card-header">
+              <span class="activity-card-title">
+                <span class="legend-dot-miss" aria-hidden="true"></span>
+                <span>Cache Misses</span>
+              </span>
+              <span class="activity-badge-miss">Forwarded</span>
+            </div>
+            <div class="activity-numbers">
+              <span class="activity-count">6,418</span>
+              <span class="activity-percent" style="color: #92400e;">25.9%</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar-fill-miss"></div>
+            </div>
+            <p class="activity-desc">
+              First-time or modified prompts passed through to the underlying AI model using your BYOK setup.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             6. ESTIMATED AI COST SAVINGS CARD
+             ================================================== -->
+      <section class="savings-panel" id="panel-estimated-savings" aria-label="Estimated AI Cost Savings">
+        <div class="dash-panel-header">
+          <div class="dash-panel-title-group">
+            <h2 class="dash-panel-title">Estimated AI Cost Savings</h2>
+            <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+          </div>
+          <span class="dash-panel-sub">Based on 7-Day Usage</span>
+        </div>
+
+        <div class="savings-grid">
+          <div class="savings-col">
+            <span class="savings-label">Estimated Provider Cost Without Cache</span>
+            <div class="savings-value">₹2,487</div>
+            <span class="savings-sub">Hypothetical un-cached direct provider billing</span>
+          </div>
+
+          <div class="savings-col">
+            <span class="savings-label">Estimated Cost With ProxEve Cache</span>
+            <div class="savings-value">₹645</div>
+            <span class="savings-sub">Direct cost incurred solely on cache misses</span>
+          </div>
+
+          <div class="savings-col highlight">
+            <span class="savings-label" style="color: #15803d;">Estimated Savings</span>
+            <div class="savings-value green">₹1,842</div>
+            <span class="savings-sub" style="color: #166534;">Estimated provider cost avoided</span>
+          </div>
+        </div>
+
+        <p class="savings-disclaimer">
+          * <strong>Disclaimer:</strong> Estimated values based on mock usage and pricing assumptions. Actual savings depend on your AI provider, model, request mix, and cache hit rate.
+        </p>
+      </section>
+
+      <!-- ==================================================
+             7. REQUEST BREAKDOWN TABLE
+             ================================================== -->
+      <section class="breakdown-table-wrap" id="panel-request-breakdown" aria-label="Request Breakdown by Day">
+        <div class="dash-panel-header" style="padding: 1.25rem 1.5rem; background: #ffffff;">
+          <div class="dash-panel-title-group">
+            <h2 class="dash-panel-title">Request Breakdown</h2>
+            <span class="mock-badge"><span class="mock-badge-dot"></span>Demo data</span>
+          </div>
+          <span class="dash-panel-sub">Last 7 Calendar Days</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="breakdown-table" id="usage-breakdown-table">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Requests</th>
+                <th scope="col">Cache Hits</th>
+                <th scope="col">Cache Misses</th>
+                <th scope="col">Hit Rate</th>
+                <th scope="col" style="text-align: right;">Estimated Savings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Sunday, Sep 11 -->
+              <tr>
+                <td class="date-col">Sun, Sep 11, 2026</td>
+                <td class="num-col">4,581</td>
+                <td class="num-col" style="color: #065f46;">3,418</td>
+                <td class="num-col" style="color: #92400e;">1,163</td>
+                <td><span class="hit-badge-pill">74.6%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹342</td>
+              </tr>
+
+              <!-- Saturday, Sep 10 -->
+              <tr>
+                <td class="date-col">Sat, Sep 10, 2026</td>
+                <td class="num-col">3,450</td>
+                <td class="num-col" style="color: #065f46;">2,546</td>
+                <td class="num-col" style="color: #92400e;">904</td>
+                <td><span class="hit-badge-pill">73.8%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹255</td>
+              </tr>
+
+              <!-- Friday, Sep 9 -->
+              <tr>
+                <td class="date-col">Fri, Sep 9, 2026</td>
+                <td class="num-col">4,080</td>
+                <td class="num-col" style="color: #065f46;">3,080</td>
+                <td class="num-col" style="color: #92400e;">1,000</td>
+                <td><span class="hit-badge-pill">75.5%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹308</td>
+              </tr>
+
+              <!-- Thursday, Sep 8 -->
+              <tr>
+                <td class="date-col">Thu, Sep 8, 2026</td>
+                <td class="num-col">3,210</td>
+                <td class="num-col" style="color: #065f46;">2,362</td>
+                <td class="num-col" style="color: #92400e;">848</td>
+                <td><span class="hit-badge-pill">73.6%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹236</td>
+              </tr>
+
+              <!-- Wednesday, Sep 7 -->
+              <tr>
+                <td class="date-col">Wed, Sep 7, 2026</td>
+                <td class="num-col">3,540</td>
+                <td class="num-col" style="color: #065f46;">2,612</td>
+                <td class="num-col" style="color: #92400e;">928</td>
+                <td><span class="hit-badge-pill">73.8%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹261</td>
+              </tr>
+
+              <!-- Tuesday, Sep 6 -->
+              <tr>
+                <td class="date-col">Tue, Sep 6, 2026</td>
+                <td class="num-col">3,120</td>
+                <td class="num-col" style="color: #065f46;">2,296</td>
+                <td class="num-col" style="color: #92400e;">824</td>
+                <td><span class="hit-badge-pill">73.6%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹230</td>
+              </tr>
+
+              <!-- Monday, Sep 5 -->
+              <tr>
+                <td class="date-col">Mon, Sep 5, 2026</td>
+                <td class="num-col">2,840</td>
+                <td class="num-col" style="color: #065f46;">2,089</td>
+                <td class="num-col" style="color: #92400e;">751</td>
+                <td><span class="hit-badge-pill">73.6%</span></td>
+                <td style="text-align: right;" class="savings-col-text">₹210</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================================================
+             8. EMPTY STATE (INCLUDED FOR FUTURE USE, HIDDEN BY DEFAULT)
+             ================================================== -->
+      <section class="usage-empty-state" id="usage-empty-state" style="display: none;" aria-label="Empty Usage State">
+        <div class="empty-icon-box" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" x2="12" y1="20" y2="10"></line>
+            <line x1="18" x2="18" y1="20" y2="4"></line>
+            <line x1="6" x2="6" y1="20" y2="16"></line>
+          </svg>
+        </div>
+        <h2 class="empty-title">No usage data yet</h2>
+        <p class="empty-desc">
+          Connect your application and start sending requests through ProxEve to see usage metrics here.
+        </p>
+        <a href="index.html#quickstart" class="btn-empty-quickstart" id="btn-empty-quickstart">
+          <span>View Quickstart</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </section>
+    </main>
+  </div>
+
+  <%- include('../partials/toast-msg.ejs') %>
+
+  <%- include('../partials/footer.ejs') %>
+</body>
+
+</html>

@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('./partials/head.ejs') %>
+
+<body>
+
+  <%- include('./partials/navbar.ejs') %>
+
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section id="hero">
+      <div class="container">
+        <div class="hero-grid" id="hero-grid">
+          <!-- Left Column: Headline, Copy & CTAs (Left-Aligned) -->
+          <div class="hero-content" id="hero-content">
+            <!-- Headline -->
+            <h1 class="hero-title" id="hero-headline">
+              Cut AI API Costs. Serve Responses Faster.
+            </h1>
+
+            <!-- Supporting Text -->
+            <p class="hero-subtitle" id="hero-subtitle">
+              ProxEve intelligently caches AI API responses so repeated requests can be served without hitting the model again.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="hero-cta-group">
+              <a href="/signup" class="btn btn-primary btn-lg" id="hero-cta-primary">
+                <span>Get started free</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="/#quickstart" class="btn btn-secondary btn-lg" id="hero-cta-secondary">
+                View quickstart
+              </a>
+            </div>
+
+            <!-- Trust / Value Line -->
+            <div class="hero-trust-line" id="hero-trust-line">
+              <span>BYOK</span>
+              <span class="hero-trust-separator" aria-hidden="true">•</span>
+              <span>1-minute integration</span>
+              <span class="hero-trust-separator" aria-hidden="true">•</span>
+              <span>Built for developers</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Request Inspector Product UI -->
+          <div class="hero-inspector-column" id="hero-inspector-column">
+            <article class="macos-code-window request-inspector-panel" id="request-inspector-window">
+              <!-- macOS Window Header Bar -->
+              <div class="macos-window-header">
+                <div class="macos-dots" aria-hidden="true">
+                  <span class="macos-dot macos-dot-red"></span>
+                  <span class="macos-dot macos-dot-yellow"></span>
+                  <span class="macos-dot macos-dot-green"></span>
+                </div>
+                <span class="macos-window-title">REQUEST INSPECTOR</span>
+                <div class="inspector-live-tag" aria-label="Observability live status">
+                  <span class="live-dot" aria-hidden="true"></span>
+                  <span>LIVE</span>
+                </div>
+              </div>
+
+              <!-- Inspector Window Body -->
+              <div class="inspector-body">
+                <!-- Endpoint Request Bar -->
+                <div class="inspector-route-bar">
+                  <span class="method-tag method-post">POST</span>
+                  <span class="endpoint-path">/v1/chat/completions</span>
+                  <span class="status-tag status-ok">200 OK</span>
+                </div>
+
+                <!-- Two-Column Request Information Grid -->
+                <div class="inspector-grid-2col">
+                  <div class="inspector-field">
+                    <span class="field-label">Model</span>
+                    <span class="field-value field-mono">gpt-4o</span>
+                  </div>
+                  <div class="inspector-field">
+                    <span class="field-label">Cache</span>
+                    <span class="field-value cache-hit-val">
+                      <span class="check-icon" aria-hidden="true">&#10003;</span>
+                      <span>HIT</span>
+                    </span>
+                  </div>
+                  <div class="inspector-field">
+                    <span class="field-label">Match</span>
+                    <span class="field-value">Exact</span>
+                  </div>
+                  <div class="inspector-field">
+                    <span class="field-label">Latency</span>
+                    <span class="field-value latency-demo-val">11ms</span>
+                  </div>
+                </div>
+
+                <!-- Highlighted Success Area -->
+                <div class="inspector-success-area">
+                  <div class="success-check-badge" aria-hidden="true">&#10003;</div>
+                  <span class="success-msg">&#10003; Response served from cache</span>
+                </div>
+
+                <!-- Visual Comparison Section -->
+                <div class="inspector-comparison-section">
+                  <div class="comparison-item">
+                    <span class="comparison-label">AI Provider Call</span>
+                    <span class="comparison-val skipped-pill">Skipped</span>
+                  </div>
+                  <div class="comparison-sep" aria-hidden="true"></div>
+                  <div class="comparison-item">
+                    <span class="comparison-label">Response</span>
+                    <span class="comparison-val cached-pill">Cached</span>
+                  </div>
+                </div>
+
+                <!-- Flow Trace Footer (Your App -> ProxEve -> Cache HIT -> Cached Response) -->
+                <div class="inspector-flow-footer" aria-label="Request lifecycle summary">
+                  <div class="flow-step-pair">
+                    <div class="flow-step-node">
+                      <span class="flow-step-dot"></span>
+                      <span>Your App</span>
+                    </div>
+                    <span class="flow-step-arrow" aria-hidden="true">&rarr;</span>
+                    <div class="flow-step-node flow-step-highlight">
+                      <span class="flow-step-dot"></span>
+                      <span>ProxEve</span>
+                    </div>
+                  </div>
+                  <span class="flow-step-arrow flow-step-mid-arrow" aria-hidden="true">&rarr;</span>
+                  <div class="flow-step-pair">
+                    <div class="flow-step-node flow-step-hit">
+                      <span class="flow-step-dot"></span>
+                      <span>Cache HIT</span>
+                    </div>
+                    <span class="flow-step-arrow" aria-hidden="true">&rarr;</span>
+                    <div class="flow-step-node flow-step-res">
+                      <span class="flow-step-dot"></span>
+                      <span>Cached Response</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature / Overview Section -->
+    <section id="overview" class="feature-section">
+      <span id="product" style="position: absolute; top: 0;" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Value Proposition</span>
+          <h2 class="section-title">Built to make AI APIs cheaper and faster</h2>
+          <p class="section-subtitle">
+            Designed for modern software teams deploying LLMs into production environments.
+          </p>
+        </div>
+
+        <div class="feature-cards-grid">
+          <!-- Card 1: Lower AI Costs -->
+          <article class="feature-card" id="feature-card-costs">
+            <div class="feature-card-top">
+              <div class="feature-icon-wrapper icon-emerald" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+            </div>
+
+            <h3 class="feature-card-title">Lower AI Costs</h3>
+            <p class="feature-card-text">
+              Serve repeated requests from cache instead of making unnecessary AI model calls.
+            </p>
+
+            <!-- Mini Visual / Code Panel -->
+            <div class="feature-metric-box">
+              <div class="mini-terminal-block">
+                <div class="mini-terminal-row">
+                  <span class="mono-label">CACHE MISS</span>
+                  <span class="mono-action">→ AI Provider</span>
+                </div>
+                <div class="mini-terminal-row active-hit">
+                  <span class="mono-label text-emerald">CACHE HIT</span>
+                  <span class="mono-action text-emerald">→ Cached Response</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-bullets">
+              <span>✓ Avoid repeated model calls</span>
+              <span>✓ Reuse cached responses</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Faster Responses -->
+          <article class="feature-card" id="feature-card-speed">
+            <div class="feature-card-top">
+              <div class="feature-icon-wrapper icon-blue" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+            </div>
+
+            <h3 class="feature-card-title">Faster Responses</h3>
+            <p class="feature-card-text">
+              Cache hits can return stored responses without waiting for a new model generation.
+            </p>
+
+            <!-- Mini Visual / Code Panel -->
+            <div class="feature-metric-box">
+              <div class="mini-terminal-block">
+                <div class="mini-terminal-tag">CACHE HIT</div>
+                <div class="mini-terminal-row">
+                  <span class="mono-label">Model generation:</span>
+                  <span class="mono-val text-muted">SKIPPED</span>
+                </div>
+                <div class="mini-terminal-row">
+                  <span class="mono-label">Response:</span>
+                  <span class="mono-val text-blue">CACHED</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-bullets">
+              <span>✓ Skip unnecessary model generation</span>
+              <span>✓ Fast cache responses</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Simple Integration -->
+          <article class="feature-card" id="feature-card-integration">
+            <div class="feature-card-top">
+              <div class="feature-icon-wrapper icon-purple" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                  <path d="M21 12H8"></path>
+                  <polyline points="17 8 21 12 17 16"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <h3 class="feature-card-title">Simple Integration</h3>
+            <p class="feature-card-text">
+              Route your existing AI API requests through ProxEve with a simple base URL change.
+            </p>
+
+            <!-- Mini Visual / Code Panel -->
+            <div class="feature-metric-box">
+              <div class="mini-terminal-block">
+                <div class="mini-terminal-row">
+                  <span class="mono-label">baseURL:</span>
+                  <span class="mono-val text-cyan">https://api.proxeve.io/v1</span>
+                </div>
+                <div class="mini-terminal-row">
+                  <span class="mono-label">BYOK:</span>
+                  <span class="mono-val text-purple">Your provider key</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-bullets">
+              <span>✓ Minimal code changes</span>
+              <span>✓ Bring Your Own Key (BYOK)</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works / Architecture Section -->
+    <section id="architecture">
+      <span id="how-it-works" style="position: absolute; top: 0;" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Architecture</span>
+          <h2 class="section-title">How ProxEve Works</h2>
+          <p class="section-subtitle">
+            A transparent, zero-latency caching proxy sitting between your application and AI model providers.
+          </p>
+        </div>
+
+        <!-- 3 Connected Pipeline Step Cards -->
+        <div class="how-steps-grid">
+          <!-- Step 1 -->
+          <article class="step-card" id="step-card-1">
+            <div class="step-card-top">
+              <div class="step-icon-wrap icon-blue" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <div class="step-number">
+                <span class="step-number-pill">01</span>
+                <span>STEP ONE</span>
+              </div>
+            </div>
+
+            <h3 class="step-title">Route AI Request</h3>
+            <p class="step-desc">
+              Your application sends standard OpenAI or Anthropic calls. Simply point your client’s <code>baseURL</code> to ProxEve with zero SDK rewrites.
+            </p>
+
+            <!-- Step 1 Micro UI Preview -->
+            <div class="step-micro-preview">
+              <div class="micro-preview-route">
+                <span class="micro-badge-method">POST</span>
+                <span class="micro-route-text">/v1/chat/completions</span>
+              </div>
+              <div class="micro-preview-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>1-line client baseURL swap</span>
+              </div>
+            </div>
+
+            <div class="step-features-mini">
+              <span>✓ Drop-in compatibility</span>
+              <span>✓ BYOK key security</span>
+            </div>
+          </article>
+
+          <!-- Step 2 -->
+          <article class="step-card" id="step-card-2">
+            <div class="step-card-top">
+              <div class="step-icon-wrap icon-purple" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <div class="step-number">
+                <span class="step-number-pill">02</span>
+                <span>STEP TWO</span>
+              </div>
+            </div>
+
+            <h3 class="step-title">Inspect & Match Cache</h3>
+            <p class="step-desc">
+              ProxEve evaluates the incoming prompt in under 2ms using SHA-256 exact hash indexing or optional semantic vector similarity.
+            </p>
+
+            <!-- Step 2 Micro UI Preview -->
+            <div class="step-micro-preview">
+              <div class="micro-eval-row">
+                <span class="eval-label">Hash Index:</span>
+                <span class="eval-val">SHA-256 (Prompt + Model)</span>
+              </div>
+              <div class="micro-eval-row">
+                <span class="eval-label">Lookup Latency:</span>
+                <span class="eval-val highlight-green">1.8ms in-memory</span>
+              </div>
+            </div>
+
+            <div class="step-features-mini">
+              <span>✓ Exact & semantic modes</span>
+              <span>✓ Custom TTL policies</span>
+            </div>
+          </article>
+
+          <!-- Step 3 -->
+          <article class="step-card" id="step-card-3">
+            <div class="step-card-top">
+              <div class="step-icon-wrap icon-emerald" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <div class="step-number">
+                <span class="step-number-pill">03</span>
+                <span>STEP THREE</span>
+              </div>
+            </div>
+
+            <h3 class="step-title">Stream or Forward</h3>
+            <p class="step-desc">
+              On cache HIT, the response streams instantly in ~11ms at zero model cost. On MISS, ProxEve forwards upstream, streams back, and caches asynchronously.
+            </p>
+
+            <!-- Step 3 Micro UI Preview -->
+            <div class="step-micro-preview">
+              <div class="micro-dual-split">
+                <div class="split-pill hit">
+                  <span class="pill-dot green"></span>
+                  <span class="pill-name">HIT:</span>
+                  <span class="pill-time">~11ms (0 Cost)</span>
+                </div>
+                <div class="split-pill miss">
+                  <span class="pill-dot amber"></span>
+                  <span class="pill-name">MISS:</span>
+                  <span class="pill-time">BYOK Stream & Save</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-features-mini">
+              <span>✓ Full SSE stream support</span>
+              <span>✓ 99% latency reduction</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Pricing</span>
+          <h2 class="section-title">Transparent Developer Plans</h2>
+          <p class="section-subtitle">
+            Start caching AI requests for free. Upgrade when you need more capacity and features.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- Plan 1: Developer -->
+          <article class="pricing-card" id="pricing-developer">
+            <div class="pricing-card-header">
+              <div class="pricing-badge-tier">FREE</div>
+              <h3 class="pricing-plan-name">Developer</h3>
+              <p class="pricing-plan-desc">For individual developers, side projects, and early MVPs.</p>
+            </div>
+
+            <div class="pricing-price-row">
+              <span class="pricing-currency">₹</span>
+              <span class="pricing-price">0</span>
+              <span class="pricing-period">/ month</span>
+            </div>
+
+            <!-- Key Allocation Box -->
+            <div class="pricing-allocation-box">
+              <span class="alloc-label">Monthly Included Volume</span>
+              <span class="alloc-val">10,000 cached requests / month</span>
+            </div>
+
+            <div class="pricing-divider"></div>
+
+            <ul class="pricing-features-list">
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Bring Your Own Key (BYOK)</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Exact request caching</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Standard cache TTL</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Basic usage analytics</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Developer documentation</span>
+              </li>
+            </ul>
+
+            <div class="pricing-action">
+              <a href="#cta" class="btn btn-secondary btn-pricing" id="pricing-btn-developer">
+                <span>Get started free</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Plan 2: Pro -->
+          <article class="pricing-card featured" id="pricing-pro">
+            <div class="pricing-card-header">
+              <div class="pricing-badge-tier featured-tier">PRO</div>
+              <h3 class="pricing-plan-name">Pro</h3>
+              <p class="pricing-plan-desc">For production applications and developers with higher usage.</p>
+            </div>
+
+            <div class="pricing-price-row">
+              <span class="pricing-currency">₹</span>
+              <span class="pricing-price">499</span>
+              <span class="pricing-period">/ month</span>
+            </div>
+
+            <!-- Key Allocation Box -->
+            <div class="pricing-allocation-box featured-box">
+              <span class="alloc-label">Monthly Included Volume</span>
+              <span class="alloc-val">100,000 cached requests / month</span>
+            </div>
+
+            <div class="pricing-divider featured-divider"></div>
+
+            <ul class="pricing-features-list">
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon icon-emerald" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Everything in Developer</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon icon-emerald" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Higher request limits</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon icon-emerald" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Custom cache TTL</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon icon-emerald" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Advanced usage analytics</span>
+              </li>
+              <li class="pricing-feature-item">
+                <div class="feature-check-icon icon-emerald" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Semantic caching <span class="coming-soon-badge">Coming soon</span></span>
+              </li>
+            </ul>
+
+            <div class="pricing-action">
+              <a href="#cta" class="btn btn-primary btn-pricing featured-btn" id="pricing-btn-pro">
+                <span>Get started</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Enterprise / Custom Callout -->
+        <div class="pricing-enterprise-strip" id="pricing-enterprise-bar">
+          <div class="enterprise-info">
+            <div class="enterprise-header-row">
+              <span class="enterprise-tag">CUSTOM</span>
+              <strong class="enterprise-title">Need more capacity?</strong>
+            </div>
+            <p class="enterprise-desc">Contact us for custom usage requirements and future enterprise options.</p>
+          </div>
+          <a href="#cta" class="btn btn-secondary btn-sm enterprise-btn" id="pricing-btn-enterprise">
+            Contact us
+          </a>
+        </div>
+
+        <!-- Pricing Trust Line -->
+        <div class="pricing-trust-guarantee">
+          <span>✓ No credit card required</span>
+          <span class="trust-dot">•</span>
+          <span>✓ BYOK</span>
+          <span class="trust-dot">•</span>
+          <span>✓ Upgrade when you need it</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quickstart Documentation Section -->
+    <section id="quickstart">
+      <span id="docs" style="position: absolute; top: 0;" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Developer Docs</span>
+          <h2 class="section-title">Quickstart in 60 Seconds</h2>
+          <p class="section-subtitle">
+            Zero SDK refactoring. Point your HTTP or SDK client to the proxy URL.
+          </p>
+        </div>
+
+        <div class="docs-panel" id="docs-quickstart-panel">
+          <!-- Step 1: JavaScript macOS Code Window -->
+          <div class="docs-step-item">
+            <div class="docs-step-heading">
+              <span class="docs-step-badge">JavaScript</span>
+              <span>Official OpenAI JavaScript SDK</span>
+            </div>
+            <div class="macos-code-window docs-code-window" id="javascript-code-window">
+              <div class="macos-window-header">
+                <div class="macos-dots" aria-hidden="true">
+                  <span class="macos-dot macos-dot-red"></span>
+                  <span class="macos-dot macos-dot-yellow"></span>
+                  <span class="macos-dot macos-dot-green"></span>
+                </div>
+                <span class="macos-window-title">quickstart.js</span>
+                <div class="macos-window-actions">
+                  <button type="button" class="macos-copy-btn copy-btn-generic" data-copy-target="javascript-code-text" aria-label="Copy JavaScript code">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+              </div>
+              <div class="macos-window-body">
+                <pre><code id="javascript-code-text"><span class="syn-kw">import</span> <span class="syn-var">OpenAI</span> <span class="syn-kw">from</span> <span class="syn-str">"openai"</span>;
+
+<span class="syn-kw">const</span> <span class="syn-var">client</span> <span class="syn-op">=</span> <span class="syn-kw">new</span> <span class="syn-var">OpenAI</span>({
+  <span class="syn-prop">baseURL</span>: <span class="syn-str">"https://api.proxeve.io/v1"</span>,
+  <span class="syn-prop">apiKey</span>: <span class="syn-str">"your_provider_key"</span>
+});
+
+<span class="syn-kw">const</span> <span class="syn-var">response</span> <span class="syn-op">=</span> <span class="syn-kw">await</span> <span class="syn-var">client</span>.<span class="syn-prop">chat</span>.<span class="syn-prop">completions</span>.<span class="syn-prop">create</span>({
+  <span class="syn-prop">model</span>: <span class="syn-str">"gpt-4o"</span>,
+  <span class="syn-prop">messages</span>: [{ <span class="syn-prop">role</span>: <span class="syn-str">"user"</span>, <span class="syn-prop">content</span>: <span class="syn-str">"ping"</span> }]
+});</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Python macOS Code Window -->
+          <div class="docs-step-item">
+            <div class="docs-step-heading">
+              <span class="docs-step-badge">Python</span>
+              <span>Official OpenAI Python SDK</span>
+            </div>
+            <div class="macos-code-window docs-code-window" id="python-code-window">
+              <div class="macos-window-header">
+                <div class="macos-dots" aria-hidden="true">
+                  <span class="macos-dot macos-dot-red"></span>
+                  <span class="macos-dot macos-dot-yellow"></span>
+                  <span class="macos-dot macos-dot-green"></span>
+                </div>
+                <span class="macos-window-title">main.py</span>
+                <div class="macos-window-actions">
+                  <button type="button" class="macos-copy-btn copy-btn-generic" data-copy-target="python-code-text" aria-label="Copy Python code">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+              </div>
+              <div class="macos-window-body">
+                <pre><code id="python-code-text"><span class="syn-kw">from</span> <span class="syn-var">openai</span> <span class="syn-kw">import</span> <span class="syn-var">OpenAI</span>
+
+<span class="syn-var">client</span> <span class="syn-op">=</span> <span class="syn-var">OpenAI</span>(
+    <span class="syn-prop">base_url</span><span class="syn-op">=</span><span class="syn-str">"https://api.proxeve.io/v1"</span>,
+    <span class="syn-prop">api_key</span><span class="syn-op">=</span><span class="syn-str">"your_provider_key"</span>
+)</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-layout">
+          <!-- Left: Direct Info & Support Highlights -->
+          <div class="contact-info-col">
+            <div class="contact-header-left">
+              <span class="section-tag">Contact</span>
+              <h2 class="contact-main-heading">Get in Touch</h2>
+              <p class="contact-main-desc">
+                Have a question, found a bug, or want to discuss ProxEve? We'd love to hear from you.
+              </p>
+            </div>
+
+            <!-- Support Highlights -->
+            <div class="contact-support-cards">
+              <div class="contact-support-card">
+                <div class="support-icon-wrap icon-mail" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                </div>
+                <div class="support-card-body">
+                  <h3 class="support-card-title">Direct Email</h3>
+                  <div class="support-email-row">
+                    <code id="direct-support-email">team@proxeve.io</code>
+                    <button type="button" class="copy-btn-generic copy-email-btn" data-copy-target="direct-support-email" aria-label="Copy support email">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                      <span>Copy</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-support-card">
+                <div class="support-icon-wrap icon-code" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+                <div class="support-card-body">
+                  <h3 class="support-card-title">Built for Developers</h3>
+                  <p class="support-card-text">Simple tools and documentation for integrating ProxEve into your AI applications.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Modern Form Card -->
+          <div class="contact-form-col">
+            <div class="contact-card" id="contact-card">
+              <div class="contact-card-header">
+                <span class="form-card-badge">Send a Message</span>
+                <div class="quick-topics" aria-label="Quick topic selection">
+                  <span class="quick-topic-label">Topic:</span>
+                  <button type="button" class="topic-chip" data-topic="General Inquiry">General</button>
+                  <button type="button" class="topic-chip" data-topic="Bug Report">Bug</button>
+                  <button type="button" class="topic-chip" data-topic="Quota Limits">Quota</button>
+                  <button type="button" class="topic-chip" data-topic="Feature Idea">Feedback</button>
+                </div>
+              </div>
+
+              <form class="contact-form" id="contact-form" novalidate>
+                <div class="form-row-2col">
+                  <div class="form-group">
+                    <label for="contact-name" class="form-label">Name <span class="required-star">*</span></label>
+                    <input type="text" id="contact-name" name="name" class="form-input" placeholder="Your name" required autocomplete="name" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contact-email" class="form-label">Email <span class="required-star">*</span></label>
+                    <input type="email" id="contact-email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-subject" class="form-label">Subject <span class="required-star">*</span></label>
+                  <input type="text" id="contact-subject" name="subject" class="form-input" placeholder="What would you like to talk about?" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-message" class="form-label">Message <span class="required-star">*</span></label>
+                  <textarea id="contact-message" name="message" class="form-textarea" placeholder="Tell us how we can help..." rows="5" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary btn-contact" id="btn-submit-contact">
+                    <span>Send Message</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="form-privacy-note">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <span>We respect your privacy. No spam or newsletters, ever.</span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta">
+      <div class="container">
+        <div class="cta-box" id="cta-card">
+          <div class="cta-badge">
+            <span class="cta-badge-dot" aria-hidden="true"></span>
+            <span>EARLY ACCESS • FREE DEVELOPER TIER</span>
+          </div>
+
+          <h2 class="cta-heading">Start caching your AI requests.</h2>
+          <p class="cta-text">
+            Connect ProxEve to your application and start reducing unnecessary AI API calls.
+          </p>
+
+          <!-- Quick Endpoint Preview -->
+          <div class="cta-quick-endpoint" id="cta-endpoint-box">
+            <div class="cta-endpoint-tag">Base URL</div>
+            <code class="cta-endpoint-code" id="cta-baseurl-text">https://api.proxeve.io/v1</code>
+            <button type="button" class="cta-copy-btn copy-btn-generic" data-copy-target="cta-baseurl-text" aria-label="Copy ProxEve base URL" id="btn-copy-cta-endpoint">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+
+          <!-- Actions -->
+          <div class="cta-actions">
+            <a href="#pricing" class="btn btn-cta-primary" id="cta-btn-free">
+              <span>Get started free</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="#quickstart" class="btn btn-cta-secondary" id="cta-btn-quickstart">
+              <span>View Quickstart</span>
+            </a>
+          </div>
+
+          <!-- Trust / Perks -->
+          <div class="cta-perks">
+            <span class="cta-perk-item">✓ 10,000 requests/mo free</span>
+            <span class="cta-perk-divider" aria-hidden="true">•</span>
+            <span class="cta-perk-item">✓ Bring Your Own Key (BYOK)</span>
+            <span class="cta-perk-divider" aria-hidden="true">•</span>
+            <span class="cta-perk-item">✓ No credit card required</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

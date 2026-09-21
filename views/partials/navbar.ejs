@@ -1,0 +1,44 @@
+<header id="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <!-- Logo -->
+      <a href="/" class="logo-link" id="header-logo" aria-label="ProxEve Home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="8" height="8" rx="2"></rect>
+            <rect x="14" y="3" width="8" height="8" rx="2"></rect>
+            <rect x="8" y="13" width="8" height="8" rx="2"></rect>
+            <path d="M6 11v4a2 2 0 0 0 2 2h2"></path>
+            <path d="M18 11v4a2 2 0 0 1-2 2h-2"></path>
+          </svg>
+        </span>
+        <span>ProxEve</span>
+      </a>
+
+      <!-- Navigation -->
+      <nav id="site-nav" aria-label="Main Navigation">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="/#overview" class="nav-link" id="nav-link-overview">Overview</a></li>
+          <li><a href="/#architecture" class="nav-link" id="nav-link-architecture">Architecture</a></li>
+          <li><a href="/#pricing" class="nav-link" id="nav-link-pricing">Pricing</a></li>
+          <li><a href="/#quickstart" class="nav-link" id="nav-link-quickstart">Quickstart</a></li>
+          <li class="mobile-nav-auth-item"><a href="/signin" class="btn btn-secondary btn-sm nav-mobile-btn" id="mobile-nav-signin">Sign in</a></li>
+          <li class="mobile-nav-auth-item"><a href="/api/auth/signup" class="btn btn-primary btn-sm nav-mobile-btn" id="mobile-nav-signup">Get started Free</a></li>
+        </ul>
+      </nav>
+
+      <!-- Actions -->
+      <div class="header-actions">
+        <a href="/signin" class="btn btn-text btn-sm" id="header-btn-signin">Sign in</a>
+        <a href="/signup" class="btn btn-primary btn-sm" id="header-btn-get-started">Get started Free</a>
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-line line-1"></span>
+            <span class="hamburger-line line-2"></span>
+            <span class="hamburger-line line-3"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
