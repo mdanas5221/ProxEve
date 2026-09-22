@@ -2,9 +2,10 @@ const connectDB = require("./config/db");
 const express = require("express");
 const app = express();
 const path = require("path");
+const session = require("express-session");
+const methodOverride = require("method-override");
 const authRoutes = require("./routes/auth.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
-const session = require("express-session");
 
 connectDB()
   .then(() => {
@@ -13,6 +14,13 @@ connectDB()
   .catch((err) => {
     console.log(err);
   });
+
+// DEFAULT MIDDLEWARES
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+
+app.use(methodOverride("_method"));
 
 app.use(
   session({
@@ -25,10 +33,6 @@ app.use(
 // EXPRESS SETTINGS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
-// DEFAULT MIDDLEWARES
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
 app.use("/", authRoutes);

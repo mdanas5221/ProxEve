@@ -1766,37 +1766,40 @@
       inputFullName.select();
     }
 
-    function saveAccountDetails() {
+    async function saveAccountDetails() {
       const newName = inputFullName.value.trim();
       const newEmail = inputEmail.value.trim();
 
-      if (newName) {
-        displayFullName.textContent = newName;
-        const sidebarName = document.querySelector(".sidebar-user .user-name");
-        if (sidebarName) sidebarName.textContent = newName;
-        const sidebarAvatar = document.querySelector(
-          ".sidebar-user .user-avatar",
-        );
-        if (sidebarAvatar) {
-          const initials = newName
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase();
-          if (initials) sidebarAvatar.textContent = initials;
-        }
-      }
-      if (newEmail) {
-        displayEmail.textContent = newEmail;
-        const sidebarEmail = document.querySelector(
-          ".sidebar-user .user-email",
-        );
-        if (sidebarEmail) sidebarEmail.textContent = newEmail;
+      if (!newName || !newEmail) {
+        showToast("Name and email are required");
+        return;
       }
 
-      exitAccountEditMode();
-      showToast("Account details updated successfully");
+      try {
+        const response = await fetch("/dashboard/settings/profile", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: newName,
+            email: newEmail,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          showToast(data.message || "Profile update failed");
+          return;
+        }
+
+        exitAccountEditMode();
+        showToast("Account details updated successfully");
+      } catch (error) {
+        console.error("Profile update error:", error);
+        showToast("Something went wrong");
+      }
     }
 
     function cancelAccountEdit() {
@@ -1846,20 +1849,6 @@
         });
       }
     });
-
-    const changePasswordBtn = document.getElementById("btn-change-password");
-    if (changePasswordBtn) {
-      changePasswordBtn.addEventListener("click", () => {
-        showToast("Password reset dialog simulated (Demo Mode)");
-      });
-    }
-
-    const setup2faBtn = document.getElementById("btn-setup-2fa");
-    if (setup2faBtn) {
-      setup2faBtn.addEventListener("click", () => {
-        showToast("Two-factor setup workflow (Demo Mode)");
-      });
-    }
 
     const deleteAccountBtn = document.getElementById("btn-delete-account");
     if (deleteAccountBtn) {
