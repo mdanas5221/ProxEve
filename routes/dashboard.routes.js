@@ -3,9 +3,52 @@ const router = express.Router();
 const isAuthenticated = require("../middlewares/auth.middleware");
 const attachUser = require("../middlewares/user.middleware");
 const User = require("../models/user");
+const ApiKey = require("../models/apiKey");
+const generateApiKey = require("../utils/generateApiKey");
 
 router.use(isAuthenticated);
 router.use(attachUser);
+
+router.post("/api-keys", async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    if (!name || !name.trim()) {
+      return res.status(400).json({
+        message: "API key name is required",
+      });
+    }
+
+    const generatedKey = generateApiKey();
+    console.log(generatedKey);
+
+    const { rawKey, keyPrefix, keyHash } = generatedKey;
+
+    const apiKey = await ApiKey.create({
+      user: req.session.userId,
+      name: name.trim(),
+      keyPrefix,
+      keyHash,
+    });
+
+    res.status(201).json({
+      message: "API key created successfully",
+
+      apiKey: {
+        id: apiKey._id,
+        name: apiKey.name,
+        keyPrefix: apiKey.keyPrefix,
+        key: rawKey,
+      },
+    });
+  } catch (error) {
+    console.log("API key creation error:", error);
+
+    res.status(500).json({
+      message: "Something went wrong",
+    });
+  }
+});
 
 router.get("/overview", async (req, res) => {
   res.render("dashboard/overview");

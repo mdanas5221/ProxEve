@@ -2110,7 +2110,7 @@ body.sidebar-collapsed .dash-sidebar-toggle-btn {
   border: 1px solid var(--border-subtle, #e2e8f0);
   border-radius: 12px;
   width: 100%;
-  max-width: 500px;
+  max-width: 745px;
   box-shadow:
     0 20px 25px -5px rgba(15, 23, 42, 0.15),
     0 8px 10px -6px rgba(15, 23, 42, 0.1);
@@ -3105,7 +3105,7 @@ body.sidebar-collapsed .dash-sidebar-toggle-btn {
 .api-key-val-box {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background: #f8fafc;
   border: 1px solid var(--border-subtle, #e2e8f0);
   border-radius: 8px;

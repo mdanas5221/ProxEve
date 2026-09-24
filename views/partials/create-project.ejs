@@ -1,8 +1,11 @@
- <div class="modal-backdrop" id="modal-create-project" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+ <div class="modal-backdrop" id="modal-create-project" role="dialog" aria-modal="true" aria-labelledby="modal-project-title">
    <div class="modal-card">
      <div class="modal-header">
-       <h2 class="modal-title" id="modal-title">Create a Project</h2>
-       <button type="button" class="modal-close-btn" id="btn-close-modal" aria-label="Close dialog">
+       <div class="modal-header-text">
+         <h2 class="modal-title" id="modal-project-title">Create a Project</h2>
+         <p class="modal-desc">Configure a new project workspace for your AI routing.</p>
+       </div>
+       <button type="button" class="modal-close-btn" id="btn-close-project-modal" aria-label="Close dialog">
          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
            <line x1="18" y1="6" x2="6" y2="18"></line>
            <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -13,23 +16,23 @@
      <form id="form-create-project" onsubmit="event.preventDefault();">
        <div class="modal-body">
          <div class="form-group">
-           <label for="project-name-input" class="form-label">
+           <label class="form-label" for="project-name-input">
              Project Name <span style="color: #ef4444;">*</span>
            </label>
-           <input type="text" id="project-name-input" name="projectName" class="form-input" placeholder="e.g. My AI App" required autocomplete="off" />
+           <input type="text" id="project-name-input" name="projectName" class="form-input" placeholder="e.g. Smart Support Bot" required autocomplete="off" />
            <span class="form-error-msg" id="project-name-error">Project Name is required</span>
          </div>
 
          <div class="form-group">
-           <label for="project-desc-input" class="form-label">
+           <label class="form-label" for="project-desc-input">
              Description <span style="color: #ef4444;">*</span>
            </label>
-           <textarea id="project-desc-input" name="projectDescription" class="form-textarea" placeholder="Brief description of your application" rows="3" required></textarea>
+           <textarea id="project-desc-input" name="projectDescription" class="form-textarea" placeholder="Brief description of what this application does" rows="3" required></textarea>
            <span class="form-error-msg" id="project-desc-error">Description is required</span>
          </div>
 
          <div class="form-group">
-           <label for="project-provider-select" class="form-label">
+           <label class="form-label" for="project-provider-select">
              AI Provider <span style="color: #ef4444;">*</span>
            </label>
            <select id="project-provider-select" name="aiProvider" class="form-select" required>
@@ -43,8 +46,8 @@
        </div>
 
        <div class="modal-footer">
-         <button type="button" class="btn-modal-cancel" id="btn-cancel-modal">Cancel</button>
-         <button type="button" class="btn-modal-submit" id="btn-submit-modal">Create Project</button>
+         <button type="button" class="btn-modal-cancel" id="btn-cancel-project-modal">Cancel</button>
+         <button type="button" class="btn-modal-submit" id="btn-submit-project-modal">Create Project</button>
        </div>
      </form>
    </div>
