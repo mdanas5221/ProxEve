@@ -12,6 +12,16 @@ const apiKeySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    project: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    environment: {
+      type: String,
+      enum: ["Development", "Production"],
+      required: true,
+    },
     keyPrefix: {
       type: String,
       required: true,

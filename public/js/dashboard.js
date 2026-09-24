@@ -453,6 +453,8 @@
           },
           body: JSON.stringify({
             name: nameVal,
+            project: projectVal,
+            environment: envVal,
           }),
         });
 
@@ -817,7 +819,7 @@
   }
 
   // =========================================================================
-  // 5. Projects Page Module (projects.html)
+  // 5. Projects Page Module (projects.ejs)
   // =========================================================================
   function initProjectsModule() {
     const isProjects =
@@ -929,7 +931,7 @@
       });
     }
 
-    function handleCreateProject() {
+    async function handleCreateProject() {
       const nameVal = projectNameInput ? projectNameInput.value.trim() : "";
       const descVal = projectDescInput ? projectDescInput.value.trim() : "";
       const providerVal = projectProviderSelect
@@ -980,44 +982,111 @@
         return;
       }
 
-      // Add newly created project to projects table if table exists
-      const tbody = document.querySelector(".projects-table tbody");
-      if (tbody) {
-        const newRow = document.createElement("tr");
-        const providerBadgeClass = providerVal.toLowerCase();
-        newRow.innerHTML = `
-            <td>
-              <div class="project-name-cell">
-                <div class="project-icon-box" style="background: #f1f5f9; color: #0f172a;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                    <polyline points="2 17 12 22 22 17"></polyline>
-                    <polyline points="2 12 12 17 22 12"></polyline>
-                  </svg>
-                </div>
-                <div>
-                  <div class="project-title">${nameVal}</div>
-                  <div class="project-desc-sub">${descVal}</div>
-                </div>
-              </div>
-            </td>
-            <td><span class="provider-pill provider-${providerBadgeClass}">${providerVal}</span></td>
-            <td><span class="status-pill status-active">Active</span></td>
-            <td>0</td>
-            <td>0%</td>
-            <td>Just now</td>
-            <td>
-              <button type="button" class="btn-table-action" onclick="showToast('Project ${nameVal} opened in Demo Mode')">View</button>
-            </td>
-          `;
-        tbody.prepend(newRow);
+      submitModalBtn.disabled = true;
+
+      try {
+        const response = await fetch("/dashboard/projects", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: nameVal,
+            description: descVal,
+            aiProvider: providerVal,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Project creation failed");
+        }
+
+        const createdProject = data.project;
+
+        // Add project card after successful database creation
+        const projectsGrid = document.querySelector("#projects-grid");
+
+        if (projectsGrid) {
+          const newCard = document.createElement("article");
+
+          newCard.className = "project-card";
+
+          const providerClass = createdProject.aiProvider.toLowerCase();
+
+          newCard.innerHTML = `
+    <div class="project-card-top">
+      <div class="project-card-header">
+        <div class="project-title-group">
+          <h2 class="project-name">
+            ${createdProject.name}
+          </h2>
+
+          <span class="status-pill active">
+            <span class="status-dot"></span>
+            <span>Active</span>
+          </span>
+        </div>
+      </div>
+
+      <p class="project-description">
+        ${createdProject.description}
+      </p>
+
+      <div class="provider-tag-row">
+        <span class="provider-tag">
+          <span class="provider-dot ${providerClass}"></span>
+          <span>${createdProject.aiProvider}</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="project-card-bottom">
+      <div class="project-metrics-grid">
+        <div class="project-metric-item">
+          <span class="project-metric-label">Requests</span>
+          <span class="project-metric-val">0</span>
+        </div>
+
+        <div class="project-metric-item">
+          <span class="project-metric-label">Cache Hit Rate</span>
+          <span class="project-metric-val">0%</span>
+        </div>
+      </div>
+
+      <div class="project-activity-row">
+        <span>Last Activity: Just now</span>
+      </div>
+
+      <div class="project-card-footer">
+        <button
+          type="button"
+          class="btn-view-project"
+          data-project="${createdProject.name}"
+        >
+          <span>View project</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+          // New card ko sabse upar add karo
+          projectsGrid.prepend(newCard);
+        }
+
+        setActiveProject(createdProject.name);
+
+        closeModal();
+
+        showToast(`Project "${createdProject.name}" created successfully!`);
+      } catch (error) {
+        console.log("Project creation error:", error);
+
+        showToast(error.message || "Something went wrong");
+      } finally {
+        submitModalBtn.disabled = false;
       }
-
-      // Update active project state in sidebar and storage
-      setActiveProject(nameVal);
-
-      closeModal();
-      showToast(`Project "${nameVal}" created successfully!`);
     }
 
     if (submitModalBtn) {
@@ -1102,401 +1171,15 @@
   }
 
   // =========================================================================
-  // 6. API Keys Page Module (api-keys.html)
+  // 6. API Keys Page Module (api-keys.ejs)
   // =========================================================================
   function initApiKeysModule() {
     const isApiKeys =
       document.getElementById("keys-tbody") ||
       (document.getElementById("btn-open-create-key") &&
         !document.getElementById("api-key-display")) ||
-      window.location.pathname.includes("api-keys.html");
+      window.location.pathname.includes("dashboard/api-keys");
     if (!isApiKeys) return;
-
-    // Modal Handling
-    const openModalBtn = document.getElementById("btn-open-create-key");
-    const closeModalBtn = document.getElementById("btn-close-modal");
-    const cancelModalBtn = document.getElementById("btn-modal-cancel");
-    const submitModalBtn = document.getElementById("btn-submit-modal");
-    const modalBackdrop = document.getElementById("modal-create-key");
-    const emptyStateCreateBtn = document.getElementById("btn-empty-create");
-    const keyNameInput = document.getElementById("key-name-input");
-    const keyProjectSelect = document.getElementById("key-project-select");
-    const keyEnvSelect = document.getElementById("key-env-select");
-    const copyGenKeyBtn = document.getElementById("btn-copy-modal-key");
-    const generatedKeyGroup = document.getElementById("generated-key-group");
-    const generatedKeyInput = document.getElementById("generated-key-input");
-
-    let currentGeneratedKey = "";
-    let isKeyGenerated = false;
-
-    function resetModal() {
-      isKeyGenerated = false;
-      currentGeneratedKey = "";
-      if (keyNameInput) {
-        keyNameInput.value = "";
-        keyNameInput.disabled = false;
-        keyNameInput.classList.remove("is-invalid");
-      }
-      if (keyProjectSelect) {
-        keyProjectSelect.value = "";
-        keyProjectSelect.disabled = false;
-        keyProjectSelect.classList.remove("is-invalid");
-      }
-      if (keyEnvSelect) {
-        keyEnvSelect.value = "";
-        keyEnvSelect.disabled = false;
-        keyEnvSelect.classList.remove("is-invalid");
-      }
-      document
-        .querySelectorAll(".form-error-msg")
-        .forEach((el) => el.classList.remove("visible"));
-      if (generatedKeyGroup) generatedKeyGroup.style.display = "none";
-      if (generatedKeyInput) generatedKeyInput.value = "";
-      if (submitModalBtn) {
-        submitModalBtn.textContent = "Create API Key";
-        submitModalBtn.classList.remove("is-done");
-      }
-      if (cancelModalBtn) {
-        cancelModalBtn.textContent = "Cancel";
-      }
-      if (copyGenKeyBtn) {
-        copyGenKeyBtn.classList.remove("copied");
-        const label = copyGenKeyBtn.querySelector(".copy-label");
-        if (label) label.textContent = "Copy";
-      }
-    }
-
-    function openModal() {
-      if (modalBackdrop) {
-        resetModal();
-        modalBackdrop.classList.add("open");
-        if (keyNameInput) {
-          setTimeout(() => keyNameInput.focus(), 60);
-        }
-      }
-    }
-
-    function closeModal() {
-      if (modalBackdrop) {
-        modalBackdrop.classList.remove("open");
-        resetModal();
-      }
-    }
-
-    // Clear validation errors on user input
-    if (keyNameInput) {
-      keyNameInput.addEventListener("input", () => {
-        keyNameInput.classList.remove("is-invalid");
-        const err = document.getElementById("key-name-error");
-        if (err) err.classList.remove("visible");
-      });
-    }
-    if (keyProjectSelect) {
-      keyProjectSelect.addEventListener("change", () => {
-        keyProjectSelect.classList.remove("is-invalid");
-        const err = document.getElementById("key-project-error");
-        if (err) err.classList.remove("visible");
-      });
-    }
-    if (keyEnvSelect) {
-      keyEnvSelect.addEventListener("change", () => {
-        keyEnvSelect.classList.remove("is-invalid");
-        const err = document.getElementById("key-env-error");
-        if (err) err.classList.remove("visible");
-      });
-    }
-
-    // Copy Generated Key button handler
-    if (copyGenKeyBtn) {
-      copyGenKeyBtn.addEventListener("click", () => {
-        if (!currentGeneratedKey) return;
-
-        const copySuccess = () => {
-          copyGenKeyBtn.classList.add("copied");
-          const label = copyGenKeyBtn.querySelector(".copy-label");
-          if (label) label.textContent = "Copied!";
-          showToast("API key copied to clipboard!");
-          setTimeout(() => {
-            copyGenKeyBtn.classList.remove("copied");
-            if (label) label.textContent = "Copy";
-          }, 2500);
-        };
-
-        if (navigator.clipboard) {
-          navigator.clipboard
-            .writeText(currentGeneratedKey)
-            .then(copySuccess)
-            .catch(() => {
-              copySuccess();
-            });
-        } else {
-          copySuccess();
-        }
-      });
-    }
-
-    // Attach openModal to all Create API Key buttons
-    if (openModalBtn) openModalBtn.addEventListener("click", openModal);
-    const mobileOpenModalBtn = document.getElementById("btn-mobile-create-key");
-    if (mobileOpenModalBtn)
-      mobileOpenModalBtn.addEventListener("click", openModal);
-    const bannerKeyBtn = document.getElementById("btn-create-key-banner");
-    if (bannerKeyBtn) bannerKeyBtn.addEventListener("click", openModal);
-    if (emptyStateCreateBtn)
-      emptyStateCreateBtn.addEventListener("click", openModal);
-    document.querySelectorAll('[data-action="create-key"]').forEach((btn) => {
-      btn.addEventListener("click", openModal);
-    });
-
-    if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-    if (cancelModalBtn) cancelModalBtn.addEventListener("click", closeModal);
-
-    if (modalBackdrop) {
-      modalBackdrop.addEventListener("click", (e) => {
-        if (e.target === modalBackdrop) {
-          closeModal();
-        }
-      });
-    }
-
-    // Close modal on Escape
-    document.addEventListener("keydown", (e) => {
-      if (
-        e.key === "Escape" &&
-        modalBackdrop &&
-        modalBackdrop.classList.contains("open")
-      ) {
-        closeModal();
-      }
-    });
-
-    // Bind row actions (Copy, Revoke, Menu)
-    function bindRowActions(row) {
-      const copyBtn = row.querySelector(".btn-copy-key");
-      if (copyBtn) {
-        copyBtn.addEventListener("click", () => {
-          const keyVal = copyBtn.getAttribute("data-key");
-          if (navigator.clipboard) {
-            navigator.clipboard
-              .writeText(keyVal)
-              .then(() => {
-                showToast("API key copied to clipboard");
-              })
-              .catch(() => {
-                showToast("API key copied: " + keyVal);
-              });
-          } else {
-            showToast("API key copied: " + keyVal);
-          }
-        });
-      }
-
-      const revokeBtn = row.querySelector(".btn-revoke-key");
-      if (revokeBtn) {
-        revokeBtn.addEventListener("click", () => {
-          const keyName = revokeBtn.getAttribute("data-name");
-          const statusPill = row.querySelector(".status-pill");
-          const codeBox = row.querySelector(".key-code-box");
-          if (statusPill) {
-            statusPill.className = "status-pill revoked";
-            statusPill.innerHTML =
-              '<span class="status-dot"></span><span>Revoked</span>';
-          }
-          if (codeBox) {
-            codeBox.style.background = "#f1f5f9";
-            codeBox.style.color = "#94a3b8";
-            codeBox.style.borderStyle = "dashed";
-          }
-          showToast(`API Key "${keyName}" revoked.`);
-        });
-      }
-
-      const threeDotBtn = row.querySelector(".btn-three-dots");
-      if (threeDotBtn) {
-        threeDotBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const dropdown = threeDotBtn.nextElementSibling;
-          const isCurrentlyOpen =
-            dropdown && dropdown.classList.contains("show");
-
-          document
-            .querySelectorAll(".menu-dropdown")
-            .forEach((d) => d.classList.remove("show"));
-          document
-            .querySelectorAll(".btn-three-dots")
-            .forEach((b) => b.classList.remove("active"));
-
-          if (!isCurrentlyOpen && dropdown) {
-            dropdown.classList.add("show");
-            threeDotBtn.classList.add("active");
-          }
-        });
-      }
-
-      row.querySelectorAll(".menu-item").forEach((item) => {
-        item.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const actionText = item.querySelector("span")
-            ? item.querySelector("span").textContent.trim()
-            : "Action";
-          document
-            .querySelectorAll(".menu-dropdown")
-            .forEach((d) => d.classList.remove("show"));
-          document
-            .querySelectorAll(".btn-three-dots")
-            .forEach((b) => b.classList.remove("active"));
-          showToast(`${actionText} clicked (Demo Mode)`);
-        });
-      });
-    }
-
-    // Handle Key Creation Submit
-    async function handleCreateKeySubmit() {
-      if (isKeyGenerated) {
-        closeModal();
-        return;
-      }
-
-      const input = document.getElementById("key-name-input");
-      const projectSelect = document.getElementById("key-project-select");
-      const envSelect = document.getElementById("key-env-select");
-      const tbody = document.getElementById("keys-tbody");
-
-      const keyName = input ? input.value.trim() : "";
-      const project = projectSelect ? projectSelect.value : "";
-      const env = envSelect ? envSelect.value : "";
-
-      const nameErr = document.getElementById("key-name-error");
-      const projErr = document.getElementById("key-project-error");
-      const envErr = document.getElementById("key-env-error");
-
-      let hasError = false;
-
-      if (!keyName) {
-        if (input) input.classList.add("is-invalid");
-        if (nameErr) nameErr.classList.add("visible");
-        hasError = true;
-      } else {
-        if (input) input.classList.remove("is-invalid");
-        if (nameErr) nameErr.classList.remove("visible");
-      }
-
-      if (!project) {
-        if (projectSelect) projectSelect.classList.add("is-invalid");
-        if (projErr) projErr.classList.add("visible");
-        hasError = true;
-      } else {
-        if (projectSelect) projectSelect.classList.remove("is-invalid");
-        if (projErr) projErr.classList.remove("visible");
-      }
-
-      if (!env) {
-        if (envSelect) envSelect.classList.add("is-invalid");
-        if (envErr) envErr.classList.add("visible");
-        hasError = true;
-      } else {
-        if (envSelect) envSelect.classList.remove("is-invalid");
-        if (envErr) envErr.classList.remove("visible");
-      }
-
-      if (hasError) {
-        showToast("Please fill all required fields.");
-        if (!keyName && input) input.focus();
-        else if (!project && projectSelect) projectSelect.focus();
-        else if (!env && envSelect) envSelect.focus();
-        return;
-      }
-
-      try {
-        const response = await fetch("/dashboard/api-keys", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: keyName,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to create API key");
-        }
-
-        currentGeneratedKey = data.apiKey.key;
-
-        const maskedKey = `${data.apiKey.keyPrefix}••••••••••••••••••••`;
-
-        if (generatedKeyInput) {
-          generatedKeyInput.value = currentGeneratedKey;
-        }
-
-        if (generatedKeyGroup) {
-          generatedKeyGroup.style.display = "flex";
-        }
-
-        if (input) input.disabled = true;
-        if (projectSelect) projectSelect.disabled = true;
-        if (envSelect) envSelect.disabled = true;
-
-        if (submitModalBtn) {
-          submitModalBtn.textContent = "Done";
-          submitModalBtn.classList.add("is-done");
-        }
-
-        if (cancelModalBtn) {
-          cancelModalBtn.textContent = "Close";
-        }
-
-        isKeyGenerated = true;
-
-        showToast(`API Key "${keyName}" generated successfully!`);
-      } catch (error) {
-        console.error("API key creation error:", error);
-        showToast(error.message || "Failed to create API key");
-      }
-    }
-
-    function escapeHtml(str) {
-      const div = document.createElement("div");
-      div.textContent = str;
-      return div.innerHTML;
-    }
-
-    if (submitModalBtn) {
-      submitModalBtn.addEventListener("click", handleCreateKeySubmit);
-    }
-
-    if (keyNameInput) {
-      keyNameInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          handleCreateKeySubmit();
-        }
-      });
-    }
-
-    // Check URL query or hash for ?create=true or #create-key
-    if (
-      window.location.search.includes("create") ||
-      window.location.hash.includes("create")
-    ) {
-      openModal();
-    }
-
-    // Initial binding for existing rows
-    document.querySelectorAll("#keys-tbody tr").forEach(bindRowActions);
-
-    // Close dropdowns on outside click
-    document.addEventListener("click", () => {
-      document
-        .querySelectorAll(".menu-dropdown")
-        .forEach((d) => d.classList.remove("show"));
-      document
-        .querySelectorAll(".btn-three-dots")
-        .forEach((b) => b.classList.remove("active"));
-    });
   }
 
   // =========================================================================

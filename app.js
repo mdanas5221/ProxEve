@@ -7,7 +7,7 @@ const methodOverride = require("method-override");
 const authRoutes = require("./routes/auth.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
 
-connectDB()
+connectDB() 
   .then(() => {
     console.log("Successfully connected to DB");
   })
@@ -46,3 +46,5 @@ app.get("/", (req, res) => {
 app.listen(3000, () => {
   console.log(`Server is running on port 3000`);
 });
+
+// PROJECT EJS RENDER

@@ -1100,6 +1100,7 @@ body.sidebar-collapsed .dash-sidebar-toggle-btn {
   gap: 0.35rem;
   padding: 0.15rem 0.5rem;
   border-radius: 9999px;
+  width: 65px;
   font-size: 0.7rem;
   font-weight: 600;
   line-height: 1;
@@ -1348,7 +1349,6 @@ body.sidebar-collapsed .dash-sidebar-toggle-btn {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  align-items: center;
 }
 
 .project-name {
@@ -1465,7 +1465,7 @@ body.sidebar-collapsed .dash-sidebar-toggle-btn {
   background: #ffffff;
   border: 1px solid var(--border-subtle, #e2e8f0);
   padding: 0;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary, #0f172a);
   cursor: pointer;
@@ -1476,15 +1476,15 @@ body.sidebar-collapsed .dash-sidebar-toggle-btn {
   transition: all var(--transition-fast, 150ms ease);
   justify-content: center;
   flex: 1;
-  min-height: 36px;
+  min-height: 45px;
   border-radius: 6px;
 }
 
 .btn-view-project:hover {
-  color: var(--accent-blue, #2563eb);
+  color: #fff;
   gap: 0.55rem;
-  background: #f8fafc;
-  border-color: #cbd5e1;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
 }
 
 .menu-container {
